@@ -23,6 +23,7 @@ import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.JList;
 import javax.swing.JTextPane;
+import java.awt.Font;
 
 public class MainWindow
 {
@@ -136,11 +137,12 @@ public class MainWindow
 		panelClients.setLayout(null);
 		
 		listFIO = new JList();
-		listFIO.setBounds(102, 80, 100, 200);
+		listFIO.setBounds(57, 79, 186, 256);
 		panelClients.add(listFIO);
 		
 		JLabel labelClients = new JLabel("\u0421\u043F\u0438\u0441\u043E\u043A \u043A\u043B\u0438\u0435\u043D\u0442\u043E\u0432");
-		labelClients.setBounds(295, 32, 87, 14);
+		labelClients.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		labelClients.setBounds(273, 21, 123, 14);
 		panelClients.add(labelClients);
 		
 		JLabel labelFIO = new JLabel("\u0424\u0418\u041E");
@@ -149,13 +151,29 @@ public class MainWindow
 		
 		JTextPane tpClient = new JTextPane();
 		tpClient.setEditable(false);
-		tpClient.setBounds(253, 78, 293, 201);
+		tpClient.setBounds(253, 78, 369, 257);
 		panelClients.add(tpClient);
 		
 		JLabel label = new JLabel("\u0418\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u044F \u043E \u043A\u043B\u0438\u0435\u043D\u0442\u0435");
-		label.setBounds(259, 62, 181, 14);
+		label.setBounds(378, 62, 123, 14);
 		panelClients.add(label);
 		panelClients.setVisible(false);
+		
+		panelReports = new JPanel();
+		panelReports.setBounds(0, 0, 680, 366);
+		frame.getContentPane().add(panelReports);
+		panelReports.setLayout(null);
+		
+		JLabel labelReports = new JLabel("\u0421\u043F\u0438\u0441\u043E\u043A \u043E\u0442\u0447\u0435\u0442\u043E\u0432");
+		labelReports.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		labelReports.setBounds(278, 26, 110, 14);
+		panelReports.add(labelReports);
+		
+		tableReports = new JTable();
+		tableReports.setRowSelectionAllowed(false);
+		tableReports.setBounds(47, 304, 571, -237);
+		panelReports.add(tableReports);
+		panelReports.setVisible(false);
 		
 		JPanel panel = new JPanel();
 		panel.setBounds(0, 368, 680, 20);
@@ -172,21 +190,6 @@ public class MainWindow
 		JLabel statusDate = new JLabel(LocalDate.now().toString());
 		statusDate.setHorizontalAlignment(SwingConstants.RIGHT);
 		panel.add(statusDate);
-		
-		panelReports = new JPanel();
-		panelReports.setBounds(0, 0, 680, 366);
-		frame.getContentPane().add(panelReports);
-		panelReports.setLayout(null);
-		
-		JLabel labelReports = new JLabel("\u0421\u043F\u0438\u0441\u043E\u043A \u043E\u0442\u0447\u0435\u0442\u043E\u0432");
-		labelReports.setBounds(296, 27, 81, 14);
-		panelReports.add(labelReports);
-		
-		tableReports = new JTable();
-		tableReports.setRowSelectionAllowed(false);
-		tableReports.setBounds(47, 304, 571, -237);
-		panelReports.add(tableReports);
-		panelReports.setVisible(false);
 	}
 
 	private class FrameWindowListener extends WindowAdapter

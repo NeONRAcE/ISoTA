@@ -10,6 +10,9 @@ import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.SwingConstants;
 
 public class LoginDialog extends JDialog
 {
@@ -47,24 +50,25 @@ public class LoginDialog extends JDialog
 		contentPanel.setLayout(null);
 
 		JLabel lblAuthorization = new JLabel("Authorization");
-		lblAuthorization.setBounds(160, 38, 87, 14);
+		lblAuthorization.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAuthorization.setBounds(172, 38, 87, 14);
 		contentPanel.add(lblAuthorization);
 
 		JLabel lblLogin = new JLabel("Login");
-		lblLogin.setBounds(170, 63, 46, 14);
+		lblLogin.setBounds(200, 83, 46, 14);
 		contentPanel.add(lblLogin);
 
 		tfLogin = new JTextField();
-		tfLogin.setBounds(160, 88, 86, 20);
+		tfLogin.setBounds(172, 108, 86, 20);
 		contentPanel.add(tfLogin);
 		tfLogin.setColumns(10);
 
 		JLabel lblPassword = new JLabel("Password");
-		lblPassword.setBounds(170, 130, 46, 14);
+		lblPassword.setBounds(192, 139, 46, 14);
 		contentPanel.add(lblPassword);
 
 		pfPass = new JPasswordField();
-		pfPass.setBounds(160, 156, 87, 20);
+		pfPass.setBounds(172, 164, 87, 20);
 		contentPanel.add(pfPass);
 		{
 			JPanel buttonPane = new JPanel();
@@ -72,6 +76,10 @@ public class LoginDialog extends JDialog
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("OK");
+				okButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+					}
+				});
 				okButton.addMouseListener(new OkButtonMouseListener());
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
