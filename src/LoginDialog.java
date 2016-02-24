@@ -41,7 +41,7 @@ public class LoginDialog extends JDialog
 		LogDiag = this;
 		
 		setBounds(100, 100, 450, 300);
-		getContentPane().setLayout(new BorderLayout()); // TODO TEST COMMIT
+		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
@@ -68,7 +68,7 @@ public class LoginDialog extends JDialog
 		contentPanel.add(pfPass);
 		{
 			JPanel buttonPane = new JPanel();
-			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
+			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT)); // TODO test commit
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("OK");
