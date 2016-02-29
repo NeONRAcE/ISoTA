@@ -42,6 +42,7 @@ public class LoginDialog extends JDialog
 	public LoginDialog()
 	{
 		LogDiag = this;
+		loginresult = false;
 		
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
@@ -92,6 +93,7 @@ public class LoginDialog extends JDialog
 				buttonPane.add(cancelButton);
 			}
 		}
+		LogDiag.setVisible(false);
 	}
 	
 	public boolean getLoginResult()
@@ -104,6 +106,7 @@ public class LoginDialog extends JDialog
 		@Override
 		public void mouseClicked(MouseEvent arg0)
 		{
+			loginresult = false;
 			String user = tfLogin.getText();
 			String pass = new String(pfPass.getPassword());
 			
@@ -126,7 +129,11 @@ public class LoginDialog extends JDialog
 	
 	private boolean getUserFromDB(String user,String pass)
 	{
-		//TODO get user from DB
-		return true;
+		boolean res = false;
+		//User.setCurrentUser(new UserModel());
+		//UserModel um = UserModel.findUser(user, pass);
+		//User.setCurrentUser(um);
+		//if (um.getID()!=0) res=true;
+		return res;
 	}
 }
