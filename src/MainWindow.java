@@ -247,12 +247,12 @@ public class MainWindow
 		@Override
 		public void focusGained(FocusEvent arg0)
 		{
-//			if (User.getCurrentUser().getID() != 0)
-//			{
-//				MainWin.statusText.setText("ФИО пользователя: "
-//						+ User.getCurrentUser().getName() + " "
-//						+ User.getCurrentUser().getLastName());
-//			}
+			if (User.getCurrentUser().getID() != 0)
+			{
+				MainWin.statusText.setText("ФИО пользователя: "
+						+ User.getCurrentUser().getName() + " "
+						+ User.getCurrentUser().getLastName());
+			}
 		}
 	}
 

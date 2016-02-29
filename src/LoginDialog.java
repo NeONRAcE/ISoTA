@@ -130,10 +130,10 @@ public class LoginDialog extends JDialog
 	private boolean getUserFromDB(String user,String pass)
 	{
 		boolean res = false;
-		//User.setCurrentUser(new UserModel());
-		//UserModel um = UserModel.findUser(user, pass);
-		//User.setCurrentUser(um);
-		//if (um.getID()!=0) res=true;
+		User.setCurrentUser(new UserModel());
+		UserModel um = UserModel.findUser(user, pass);
+		User.setCurrentUser(um);
+		if (um.getID()!=0) res=true;
 		return res;
 	}
 }
