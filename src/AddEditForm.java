@@ -42,6 +42,7 @@ public class AddEditForm {
 	 */
 	private void initialize() {
 		frmIsota = new JFrame();
+		frmIsota.setResizable(false);
 		frmIsota.setTitle("ISoTA");
 		frmIsota.setBounds(100, 100, 420, 165);
 		frmIsota.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -64,7 +65,7 @@ public class AddEditForm {
 		radioButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				frmIsota.setBounds(100, 100, 420, 800);
-				
+				frmIsota.setResizable(false);				
 			}
 		});
 		radioButton.setBounds(64, 87, 142, 23);
