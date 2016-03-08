@@ -108,6 +108,8 @@ public class ClientModel
 		this.capitalSum = newCapitalSum;
 	}
 
+	// TODO разделение на лица (ЮР-ФИЗ)
+
 	private String founderFIO;
 
 	public String getFounderFIO()
@@ -191,6 +193,7 @@ public class ClientModel
 				}
 				catch (SQLException e)
 				{
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -201,5 +204,33 @@ public class ClientModel
 		result = res.toArray(result);
 		
 		return result;
+	}
+	
+	public void save()
+	{
+		MySQLConnector connector = new MySQLConnector();
+		if (connector.SQLConnect())
+		{
+			if (this.id != 0)
+			{
+				ResultSet rs = connector.executeSQL("UPDATE clients "
+						+"SET RevisionNum=" + this.revisionNum + " AND RegistrationDate='" + this.registrationDate
+						+"' AND RegistrationNum="+this.registrationNum + " AND JuridicalAdress='"+this.juridicalAdress
+						+"' AND DirectorFIO='"+this.directorFIO+"' AND DirectorUID='"+this.directorUID
+						+"' AND PhoneNumber='"+this.phoneNumber+"' AND CapitalSum="+this.capitalSum
+						+" AND FounderFIO='"+this.founderFIO+"' AND FounderUID='"+this.founderUID
+						+"' AND FounderAdress='"+this.founderAdress+"' AND FounderPart="+this.founderPart
+						+" WHERE ID="+this.id);
+			}
+			else
+			{
+				ResultSet rs = connector.executeSQL("INSERT INTO clients(RevisionNum,RegistrationDate,RegistrationNum,JuridicalAdress,DirectorFIO,DirectorUID,PhoneNumber,CapitalSum,FounderFio,FounderUID,FounderAdress,FounderPart)"
+						+" VALUES (" + this.registrationNum + ",'" + this.registrationDate + "',"+this.registrationNum + ",'"+this.juridicalAdress
+						+"','"+this.directorFIO+"','"+this.directorUID+"','"+this.phoneNumber+"',"+this.capitalSum+",'"+this.founderFIO+"','"+this.founderUID
+						+"','"+this.founderAdress+"',"+this.founderPart+")");
+			}
+
+		}
+		connector.SQLDisconnect();
 	}
 }
