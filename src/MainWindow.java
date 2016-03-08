@@ -302,4 +302,30 @@ public class MainWindow
 			panelClients.setVisible(true);
 		}
 	}
+
+	private class ListFIOListSelectionListener implements ListSelectionListener
+	{
+		public void valueChanged(ListSelectionEvent e)
+		{
+			ClientModel cm = listFIO.getSelectedValue().client;
+			if (cm != null)
+			{
+				DefaultTableModel model = (DefaultTableModel) tableClientInfo
+						.getModel();
+				model.setRowCount(12);
+				model.setColumnCount(2);
+				model.setValueAt("Номер ревизии", 0, 0);
+				model.setValueAt(cm.getRevisionNum(), 0, 1);
+				model.setValueAt("Дата регистрации", 1, 0);
+				model.setValueAt(cm.getRegistrationDate(), 1, 1);
+				String t = cm.getFounderFIO();
+				if (t!=null)
+				{
+					
+				}
+				//TODO заполнить до конца
+			}
+		}
+	}
+
 }
