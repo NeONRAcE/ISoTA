@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import java.awt.FlowLayout;
 import java.time.LocalDate;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.BoxLayout;
@@ -23,6 +24,7 @@ import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.JList;
 import javax.swing.JTextPane;
+
 import java.awt.Font;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -31,16 +33,36 @@ import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.table.DefaultTableModel;
+
 public class MainWindow
 {
+	private class fiolist
+	{
+		ClientModel client;
+		
+		public fiolist(ClientModel cm)
+		{
+			client = cm;
+		}
+
+		public String toString()
+		{
+			return client.getDirectorFIO();
+		}
+	}
 
 	private JFrame frame;
 	private MainWindow MainWin;
 	private JPanel panelReports;
 	private JTable tableReports;
-	private JList<String> listFIO;
+	private JList<fiolist> listFIO;
 	private JPanel panelClients;
 	private JLabel statusText;
+	private JTable tableClientInfo;
+	private ClientModel[] clients;
 
 	/** Launch the application. */
 	public static void main(String[] args)
@@ -118,6 +140,7 @@ public class MainWindow
 
 		JMenuItem clientsOpen = new JMenuItem(
 				"\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u0441\u043F\u0438\u0441\u043E\u043A");
+		clientsOpen.addActionListener(new ClientsOpenActionListener());
 		menuClients.add(clientsOpen);
 
 		JMenuItem clientsAdd = new JMenuItem(
@@ -161,7 +184,8 @@ public class MainWindow
 		frame.getContentPane().add(panelClients);
 		panelClients.setLayout(null);
 
-		listFIO = new JList<String>();
+		listFIO = new JList<fiolist>();
+		listFIO.addListSelectionListener(new ListFIOListSelectionListener());
 		listFIO.setBounds(57, 79, 186, 256);
 		panelClients.add(listFIO);
 
@@ -175,15 +199,14 @@ public class MainWindow
 		labelFIO.setBounds(130, 62, 46, 14);
 		panelClients.add(labelFIO);
 
-		JTextPane tpClient = new JTextPane();
-		tpClient.setEditable(false);
-		tpClient.setBounds(253, 78, 369, 257);
-		panelClients.add(tpClient);
-
 		JLabel label = new JLabel(
 				"\u0418\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u044F \u043E \u043A\u043B\u0438\u0435\u043D\u0442\u0435");
 		label.setBounds(378, 62, 123, 14);
 		panelClients.add(label);
+
+		tableClientInfo = new JTable();
+		tableClientInfo.setBounds(253, 78, 369, 257);
+		panelClients.add(tableClientInfo);
 		panelClients.setVisible(false);
 
 		panelReports = new JPanel();
@@ -264,4 +287,19 @@ public class MainWindow
 		}
 	}
 
+	private class ClientsOpenActionListener implements ActionListener
+	{
+
+		public void actionPerformed(ActionEvent arg0)
+		{
+			clients = ClientModel.findClientsAll();
+			DefaultListModel<fiolist> listmodel = new DefaultListModel<fiolist>();
+			for (ClientModel client : clients)
+			{
+				listmodel.addElement(new fiolist(client));
+			}
+			listFIO.setModel(listmodel);
+			panelClients.setVisible(true);
+		}
+	}
 }
