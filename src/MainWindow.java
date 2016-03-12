@@ -50,7 +50,7 @@ public class MainWindow
 
 		public String toString()
 		{
-			return client.getDirectorFIO();
+			return client.getFIO();
 		}
 	}
 
@@ -312,33 +312,34 @@ public class MainWindow
 			{
 				DefaultTableModel model = (DefaultTableModel) tableClientInfo
 						.getModel();
-				model.setRowCount(12);
+				model.setRowCount(11);
 				model.setColumnCount(2);
 				model.setValueAt("Номер инспекции", 0, 0);
 				model.setValueAt(cm.getRevisionNum(), 0, 1);
 				model.setValueAt("Дата регистрации", 1, 0);
 				model.setValueAt(cm.getRegistrationDate(), 1, 1);
-				model.setValueAt("Юридический адрес", 3, 0);
-				model.setValueAt(cm.getJuridicalAdress(), 3, 1);
-				model.setValueAt("ФИО директора", 4, 0);
-				model.setValueAt(cm.getDirectorFIO(), 4, 1);
-				model.setValueAt("ИНН директора", 5, 0);
-				model.setValueAt(cm.getDirectorUID(), 5, 1);
-				model.setValueAt("Телефон", 6, 0);
-				model.setValueAt(cm.getPhoneNumber(), 6, 1);
-				model.setValueAt("Сумма уставного капитала", 7, 0);
-				model.setValueAt(cm.getCapitalSum(), 7, 1);				
-				String t = cm.getFounderFIO();
+				model.setValueAt("Адрес", 2, 0);
+				model.setValueAt(cm.getAdress(), 2, 1);
+				model.setValueAt("ФИО", 3, 0);
+				model.setValueAt(cm.getFIO(), 3, 1);
+				model.setValueAt("ИНН", 4, 0);
+				model.setValueAt(cm.getUID(), 4, 1);
+				model.setValueAt("Телефон", 5, 0);
+				model.setValueAt(cm.getPhoneNumber(), 5, 1);			
+				String t = cm.getDirectorFIO();
 				if (t!=null)
 				{
-					model.setValueAt("ФИО учредителя", 8, 0);
-					model.setValueAt(cm.getFounderFIO(), 8, 1);
-					model.setValueAt("ИНН учредителя", 9, 0);
-					model.setValueAt(cm.getFounderUID(), 9, 1);
-					model.setValueAt("Адрес учредителя", 10, 0);
-					model.setValueAt(cm.getFounderAdress(), 10, 1);
-					model.setValueAt("Доля", 11, 0);
-					model.setValueAt(cm.getFounderPart(), 11, 1);
+					model.setValueAt("ФИО директора", 6, 0);
+					model.setValueAt(cm.getDirectorFIO(), 6, 1);
+					model.setValueAt("ИНН директора", 7, 0);
+					model.setValueAt(cm.getDirectorUID(), 7, 1);
+					model.setValueAt("Юридический адрес", 8, 0);
+					model.setValueAt(cm.getDirectorAdress(), 8, 1);
+					model.setValueAt("Номер директора", 9, 0);
+					model.setValueAt(cm.getDirectorNumber(), 9, 1);
+					model.setValueAt("Cумма капитала", 10, 0);
+					model.setValueAt(cm.getCapitalSum(), 10, 1);
+					
 				}
 			}
 		}

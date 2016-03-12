@@ -36,17 +36,55 @@ public class ClientModel
 		this.registrationDate = newRegistrationDate;
 	}
 
-	private String juridicalAdress;
+	private String adress;
 
-	public String getJuridicalAdress()
+	public String getAdress()
 	{
-		return this.juridicalAdress;
+		return this.adress;
 	}
 
-	public void setJuridicalAdress(String newJuridicalAdress)
+	public void setAdress(String newAdress)
 	{
-		this.juridicalAdress = newJuridicalAdress;
+		this.adress = newAdress;
 	}
+
+	private String FIO;
+
+	public String getFIO()
+	{
+		return this.FIO;
+	}
+
+	public void setFIO(String newFIO)
+	{
+		this.FIO = newFIO;
+	}
+
+	private String UID;
+
+	public String getUID()
+	{
+		return this.UID;
+	}
+
+	public void setUID(String newUID)
+	{
+		this.UID = newUID;
+	}
+
+	private String phoneNumber;
+
+	public String getPhoneNumber()
+	{
+		return this.phoneNumber;
+	}
+
+	public void setPhoneNumber(String newPhoneNumber)
+	{
+		this.phoneNumber = newPhoneNumber;
+	}
+
+	// юр лица
 
 	private String directorFIO;
 
@@ -72,18 +110,31 @@ public class ClientModel
 		this.directorUID = newDirectorUID;
 	}
 
-	private String phoneNumber;
+	private String directorAdress;
 
-	public String getPhoneNumber()
+	public String getDirectorAdress()
 	{
-		return this.phoneNumber;
+		return this.directorAdress;
 	}
 
-	public void setPhoneNumber(String newPhoneNumber)
+	public void setDirectorAdress(String newDirectorAdress)
 	{
-		this.phoneNumber = newPhoneNumber;
+		this.directorAdress = newDirectorAdress;
 	}
-
+	
+	private int directorNumber;
+	
+	public int getDirectorNumber()
+	{
+		return this.directorNumber;
+	}
+	
+	public void setDirectorNumber(int newDirectorNumber)
+	{
+		this.directorNumber = newDirectorNumber;
+	}
+	
+	
 	private int capitalSum;
 
 	public int getCapitalSum()
@@ -94,56 +145,6 @@ public class ClientModel
 	public void setCapitalSum(int newCapitalSum)
 	{
 		this.capitalSum = newCapitalSum;
-	}
-
-	// TODO разделение на лица (ЮР-ФИЗ)
-
-	private String founderFIO;
-
-	public String getFounderFIO()
-	{
-		return this.founderFIO;
-	}
-
-	public void setFounderFIO(String newFounderFIO)
-	{
-		this.founderFIO = newFounderFIO;
-	}
-
-	private String founderUID;
-
-	public String getFounderUID()
-	{
-		return this.founderUID;
-	}
-
-	public void setFounderUID(String newFounderUID)
-	{
-		this.founderUID = newFounderUID;
-	}
-
-	private String founderAdress;
-
-	public String getFounderAdress()
-	{
-		return this.founderAdress;
-	}
-
-	public void setFounderAdress(String newFounderAdress)
-	{
-		this.founderAdress = newFounderAdress;
-	}
-
-	private int founderPart;
-
-	public int getFounderPart()
-	{
-		return this.founderPart;
-	}
-
-	public void setFounderPart(int newFounderPart)
-	{
-		this.founderPart = newFounderPart;
 	}
 
 	public static ClientModel[] findClientsAll()
@@ -166,15 +167,15 @@ public class ClientModel
 						t.id = rs.getInt("ID");
 						t.revisionNum = rs.getInt("RevisionNum");
 						t.registrationDate = rs.getDate("RegistrationDate");
-						t.juridicalAdress = rs.getString("JuridicalAdress");
+						t.adress = rs.getString("Adress");
+						t.FIO = rs.getString("FIO");
+						t.UID = rs.getString("UID");
+						t.phoneNumber = rs.getString("PhoneNumber");
 						t.directorFIO = rs.getString("DirectorFIO");
 						t.directorUID = rs.getString("DirectorUID");
-						t.phoneNumber = rs.getString("PhoneNumber");
+						t.directorAdress = rs.getString("DirectorAdress");
+						t.directorNumber = rs.getInt("DirectorNumber");
 						t.capitalSum = rs.getInt("CapitalSum");
-						t.founderFIO = rs.getString("FounderFIO");
-						t.founderUID = rs.getString("FounderUID");
-						t.founderAdress = rs.getString("FounderAdress");
-						t.founderPart = rs.getInt("FounderPart");
 						res.add(t);
 					}
 				}
@@ -202,19 +203,20 @@ public class ClientModel
 			{
 				ResultSet rs = connector.executeSQL("UPDATE clients "
 						+"SET RevisionNum=" + this.revisionNum + " AND RegistrationDate='" + this.registrationDate
-						+ " AND JuridicalAdress='" + this.juridicalAdress
+						+ " AND Adress='" + this.adress
+						+"' AND FIO='"+this.FIO+"' AND UID='"+this.UID
+						+"' AND PhoneNumber='"+this.phoneNumber
 						+"' AND DirectorFIO='"+this.directorFIO+"' AND DirectorUID='"+this.directorUID
-						+"' AND PhoneNumber='"+this.phoneNumber+"' AND CapitalSum="+this.capitalSum
-						+" AND FounderFIO='"+this.founderFIO+"' AND FounderUID='"+this.founderUID
-						+"' AND FounderAdress='"+this.founderAdress+"' AND FounderPart="+this.founderPart
+						+"' AND DirectorAdress='"+this.directorAdress+"' AND DirectorNumber='"+this.directorNumber
+						+"' AND CapitalSum='"+this.capitalSum
 						+" WHERE ID="+this.id);
 			}
 			else
 			{
-				ResultSet rs = connector.executeSQL("INSERT INTO clients(RevisionNum,RegistrationDate,RegistrationNum,JuridicalAdress,DirectorFIO,DirectorUID,PhoneNumber,CapitalSum,FounderFio,FounderUID,FounderAdress,FounderPart)"
-						+" VALUES (" + this.revisionNum + ",'" + this.registrationDate + ",'"+this.juridicalAdress
-						+"','"+this.directorFIO+"','"+this.directorUID+"','"+this.phoneNumber+"',"+this.capitalSum+",'"+this.founderFIO+"','"+this.founderUID
-						+"','"+this.founderAdress+"',"+this.founderPart+")");
+				ResultSet rs = connector.executeSQL("INSERT INTO clients(RevisionNum,RegistrationDate,Adress,FIO,UID,PhoneNumber,DirectorFIO,DirectorUID,DirectorAdress,DirectorNumber,CapitalSum)"
+						+" VALUES (" + this.revisionNum + ",'" + this.registrationDate + ",'"+this.adress
+						+"','"+this.FIO+"','"+this.UID+"','"+this.phoneNumber+",'"+this.directorFIO+"','"+this.directorUID
+						+"','"+this.directorAdress+"',"+this.directorNumber+"',"+this.capitalSum+")");
 			}
 
 		}
