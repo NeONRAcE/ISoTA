@@ -1,7 +1,5 @@
 import java.sql.*;
 
-import com.mysql.jdbc.Driver ;
-
 import sun.security.pkcs11.Secmod.DbMode;
 
 public class MySQLConnector 

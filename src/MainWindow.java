@@ -318,8 +318,6 @@ public class MainWindow
 				model.setValueAt(cm.getRevisionNum(), 0, 1);
 				model.setValueAt("Дата регистрации", 1, 0);
 				model.setValueAt(cm.getRegistrationDate(), 1, 1);
-				model.setValueAt("Номер регистрации", 2, 0);
-				model.setValueAt(cm.getRegistrationNum(), 2, 1);
 				model.setValueAt("Юридический адрес", 3, 0);
 				model.setValueAt(cm.getJuridicalAdress(), 3, 1);
 				model.setValueAt("ФИО директора", 4, 0);

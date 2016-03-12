@@ -12,7 +12,7 @@ public class ClientModel
 		return this.id;
 	}
 
-	private int revisionNum;
+	private int revisionNum; // OKPO
 
 	public int getRevisionNum()
 	{
@@ -34,18 +34,6 @@ public class ClientModel
 	public void setRegistrationDate(Date newRegistrationDate)
 	{
 		this.registrationDate = newRegistrationDate;
-	}
-
-	private int registrationNum;
-
-	public int getRegistrationNum()
-	{
-		return this.registrationNum;
-	}
-
-	public void setRegistrationNum(int newRegistrationNum)
-	{
-		this.registrationNum = newRegistrationNum;
 	}
 
 	private String juridicalAdress;
@@ -178,7 +166,6 @@ public class ClientModel
 						t.id = rs.getInt("ID");
 						t.revisionNum = rs.getInt("RevisionNum");
 						t.registrationDate = rs.getDate("RegistrationDate");
-						t.registrationNum = rs.getInt("RegistrationNum");
 						t.juridicalAdress = rs.getString("JuridicalAdress");
 						t.directorFIO = rs.getString("DirectorFIO");
 						t.directorUID = rs.getString("DirectorUID");
@@ -215,7 +202,7 @@ public class ClientModel
 			{
 				ResultSet rs = connector.executeSQL("UPDATE clients "
 						+"SET RevisionNum=" + this.revisionNum + " AND RegistrationDate='" + this.registrationDate
-						+"' AND RegistrationNum="+this.registrationNum + " AND JuridicalAdress='"+this.juridicalAdress
+						+ " AND JuridicalAdress='" + this.juridicalAdress
 						+"' AND DirectorFIO='"+this.directorFIO+"' AND DirectorUID='"+this.directorUID
 						+"' AND PhoneNumber='"+this.phoneNumber+"' AND CapitalSum="+this.capitalSum
 						+" AND FounderFIO='"+this.founderFIO+"' AND FounderUID='"+this.founderUID
@@ -225,7 +212,7 @@ public class ClientModel
 			else
 			{
 				ResultSet rs = connector.executeSQL("INSERT INTO clients(RevisionNum,RegistrationDate,RegistrationNum,JuridicalAdress,DirectorFIO,DirectorUID,PhoneNumber,CapitalSum,FounderFio,FounderUID,FounderAdress,FounderPart)"
-						+" VALUES (" + this.registrationNum + ",'" + this.registrationDate + "',"+this.registrationNum + ",'"+this.juridicalAdress
+						+" VALUES (" + this.revisionNum + ",'" + this.registrationDate + ",'"+this.juridicalAdress
 						+"','"+this.directorFIO+"','"+this.directorUID+"','"+this.phoneNumber+"',"+this.capitalSum+",'"+this.founderFIO+"','"+this.founderUID
 						+"','"+this.founderAdress+"',"+this.founderPart+")");
 			}

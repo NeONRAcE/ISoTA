@@ -40,25 +40,21 @@ public class AddEditForm extends JDialog {
 	 * Create the dialog.
 	 */
 	public AddEditForm() {
+		setTitle("\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u043A\u043B\u0438\u0435\u043D\u0442\u0430");
 		setModal(true);
-		setBounds(100, 100, 450, 366);
+		setBounds(100, 100, 450, 758);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		thisForm = this;
 
-		JLabel label = new JLabel(
-				"\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u043A\u043B\u0438\u0435\u043D\u0442\u0430");
-		label.setBounds(169, 23, 108, 14);
-		contentPanel.add(label);
-
 		JLabel label_1 = new JLabel("\u0424\u0418\u041E:");
-		label_1.setBounds(62, 63, 46, 14);
+		label_1.setBounds(62, 30, 46, 14);
 		contentPanel.add(label_1);
 
 		tfFIO = new JTextField();
-		tfFIO.setBounds(112, 60, 239, 20);
+		tfFIO.setBounds(112, 27, 239, 20);
 		contentPanel.add(tfFIO);
 		tfFIO.setColumns(10);
 
@@ -73,13 +69,13 @@ public class AddEditForm extends JDialog {
 				thisForm.setBounds(100, 100, 450, 400);
 			}
 		});
-		rbtnFiz.setBounds(72, 102, 143, 23);
+		rbtnFiz.setBounds(72, 69, 143, 23);
 		contentPanel.add(rbtnFiz);
 		btnGroup.add(rbtnFiz);
 
 		JRadioButton rbtnJur = new JRadioButton(
 				"\u042E\u0440\u0438\u0434\u0438\u0447\u0435\u0441\u043A\u043E\u0435 \u043B\u0438\u0446\u043E");
-		rbtnJur.setBounds(217, 102, 144, 23);
+		rbtnJur.setBounds(217, 69, 144, 23);
 		contentPanel.add(rbtnJur);
 		btnGroup.add(rbtnJur);
 
