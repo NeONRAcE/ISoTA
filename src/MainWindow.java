@@ -184,6 +184,23 @@ public class MainWindow
 		JMenuItem exitExit = new JMenuItem("\u0412\u044B\u0445\u043E\u0434");
 		menuExit.add(exitExit);
 		frame.getContentPane().setLayout(null);
+		
+				panelReports = new JPanel();
+				panelReports.setBounds(0, 0, 680, 366);
+				frame.getContentPane().add(panelReports);
+				panelReports.setLayout(null);
+				
+						JLabel labelReports = new JLabel(
+								"\u0421\u043F\u0438\u0441\u043E\u043A \u043E\u0442\u0447\u0435\u0442\u043E\u0432");
+						labelReports.setFont(new Font("Tahoma", Font.PLAIN, 14));
+						labelReports.setBounds(278, 26, 110, 14);
+						panelReports.add(labelReports);
+						
+								tableReports = new JTable();
+								tableReports.setRowSelectionAllowed(false);
+								tableReports.setBounds(47, 304, 571, -237);
+								panelReports.add(tableReports);
+								panelReports.setVisible(false);
 
 		panelClients = new JPanel();
 		panelClients.setBounds(0, 0, 680, 366);
@@ -232,23 +249,6 @@ public class MainWindow
 		button.setBounds(253, 7, 115, 23);
 		panel_1.add(button);
 		panelClients.setVisible(false);
-
-		panelReports = new JPanel();
-		panelReports.setBounds(0, 0, 680, 366);
-		frame.getContentPane().add(panelReports);
-		panelReports.setLayout(null);
-
-		JLabel labelReports = new JLabel(
-				"\u0421\u043F\u0438\u0441\u043E\u043A \u043E\u0442\u0447\u0435\u0442\u043E\u0432");
-		labelReports.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		labelReports.setBounds(278, 26, 110, 14);
-		panelReports.add(labelReports);
-
-		tableReports = new JTable();
-		tableReports.setRowSelectionAllowed(false);
-		tableReports.setBounds(47, 304, 571, -237);
-		panelReports.add(tableReports);
-		panelReports.setVisible(false);
 
 		JPanel panel = new JPanel();
 		panel.setBounds(0, 368, 680, 20);
