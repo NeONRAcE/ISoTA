@@ -36,6 +36,11 @@ import java.awt.event.ActionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import java.awt.Color;
+import java.awt.SystemColor;
+import javax.swing.UIManager;
 
 public class MainWindow
 {
@@ -63,6 +68,7 @@ public class MainWindow
 	private JLabel statusText;
 	private JTable tableClientInfo;
 	private ClientModel[] clients;
+	private JTextField textField;
 
 	/** Launch the application. */
 	public static void main(String[] args)
@@ -182,31 +188,49 @@ public class MainWindow
 		panelClients = new JPanel();
 		panelClients.setBounds(0, 0, 680, 366);
 		frame.getContentPane().add(panelClients);
-		panelClients.setLayout(null);
 
 		listFIO = new JList<fiolist>();
+		listFIO.setBounds(57, 68, 186, 256);
 		listFIO.addListSelectionListener(new ListFIOListSelectionListener());
-		listFIO.setBounds(57, 79, 186, 256);
+		panelClients.setLayout(null);
 		panelClients.add(listFIO);
 
 		JLabel labelClients = new JLabel(
 				"\u0421\u043F\u0438\u0441\u043E\u043A \u043A\u043B\u0438\u0435\u043D\u0442\u043E\u0432");
-		labelClients.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		labelClients.setBounds(273, 21, 123, 14);
+		labelClients.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		panelClients.add(labelClients);
 
 		JLabel labelFIO = new JLabel("\u0424\u0418\u041E");
-		labelFIO.setBounds(130, 62, 46, 14);
+		labelFIO.setBounds(130, 51, 46, 14);
 		panelClients.add(labelFIO);
 
 		JLabel label = new JLabel(
 				"\u0418\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u044F \u043E \u043A\u043B\u0438\u0435\u043D\u0442\u0435");
-		label.setBounds(378, 62, 123, 14);
+		label.setBounds(378, 51, 123, 14);
 		panelClients.add(label);
 
 		tableClientInfo = new JTable();
-		tableClientInfo.setBounds(253, 78, 369, 257);
+		tableClientInfo.setBounds(253, 67, 369, 257);
 		panelClients.add(tableClientInfo);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBounds(0, 329, 680, 35);
+		panelClients.add(panel_1);
+		panel_1.setLayout(null);
+		
+		JLabel label_1 = new JLabel("\u041F\u043E\u0438\u0441\u043A:");
+		label_1.setBounds(10, 11, 46, 14);
+		panel_1.add(label_1);
+		
+		textField = new JTextField();
+		textField.setBounds(57, 8, 186, 20);
+		panel_1.add(textField);
+		textField.setColumns(10);
+		
+		JButton button = new JButton("\u0418\u0441\u043A\u0430\u0442\u044C \u0434\u0430\u043B\u0435\u0435...");
+		button.setBounds(253, 7, 115, 23);
+		panel_1.add(button);
 		panelClients.setVisible(false);
 
 		panelReports = new JPanel();
@@ -237,6 +261,7 @@ public class MainWindow
 		panel.add(statusText);
 
 		JSeparator separator = new JSeparator();
+		separator.setForeground(UIManager.getColor("Button.background"));
 		panel.add(separator);
 
 		JLabel statusDate = new JLabel(LocalDate.now().toString());
@@ -344,5 +369,4 @@ public class MainWindow
 			}
 		}
 	}
-
 }
