@@ -35,38 +35,50 @@ public class ReportModel {
 		this.kod = newKod;
 	}
 	
-	private int sum;
+	private float sum;
 	
-	public int getSum()
+	public float getSum()
 	{
 		return this.sum;
 	}
 	
-	public void setSum(int newSum)
+	public void setSum(float newSum)
 	{
 		this.sum = newSum;
 	}
 	
-	private int paid;
+	private float paid;
 	
-	public int getPaid()
+	public float getPaid()
 	{
 		return this.paid;
 	}
 	
-	public void setPaid(int newPaid)
+	public void setPaid(float newPaid)
 	{
 		this.paid = newPaid;
 	}
 	
-	private int overpayment;
+	private float returned;
 	
-	public int getOverpayment()
+	public float getReturned()
+	{
+		return this.returned;
+	}
+	
+	public void setReturned(float newReturned)
+	{
+		this.returned = newReturned;
+	}
+	
+	private float overpayment;
+	
+	public float getOverpayment()
 	{
 		return this.overpayment;
 	}
 	
-	public void setOverpayment(int newOverpayment)
+	public void setOverpayment(float newOverpayment)
 	{
 		this.overpayment = newOverpayment;
 	}
@@ -89,11 +101,12 @@ public class ReportModel {
 					{
 						ReportModel r = new ReportModel();
 						r.id = rs.getInt("ID");
-						r.kod = rs.getInt("Kod");
 						r.operationDate = rs.getDate("Operation Date");
-						r.overpayment = rs.getInt("Overpayment");
-						r.paid = rs.getInt("Paid");
-						r.sum = rs.getInt("Sum");
+						r.kod = rs.getInt("Kod");
+						r.overpayment = rs.getFloat("Overpayment");
+						r.paid = rs.getFloat("Paid");
+						r.returned = rs.getFloat("Returned");
+						r.sum = rs.getFloat("Sum");
 						res.add(r);
 					}
 				}
@@ -112,11 +125,28 @@ public class ReportModel {
 		return result;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
+	public void save()
+	{
+		MySQLConnector connector = new MySQLConnector();
+		if (connector.SQLConnect())
+		{
+			if (this.id != 0)
+			{
+				ResultSet rs = connector.executeSQL("UPDATE reports "
+						+ "SET OperationDate=" + this.operationDate + "' AND Kod='" + this.kod
+						+ "' AND Overpayment='" + this.overpayment
+						+ "' AND Paid='"+this.paid + "' AND Returned='" + this.returned
+						+ "' AND Sum='" + this.sum + " WHERE ID=" + this.id);
+						
+			}
+			else
+			{
+				ResultSet rs = connector.executeSQL("INSERT INTO reports(OperationDate,Kod,Overpayment,Paid,Returned,Sum)"
+						+" VALUES (" + this.operationDate + ",'" + this.kod + ",'"+this.overpayment
+						+"','"+this.paid+"','"+this.returned+"','"+this.sum+")");
+			}
+
+		}
+		connector.SQLDisconnect();
+	}
 }

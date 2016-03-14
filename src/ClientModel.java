@@ -202,8 +202,8 @@ public class ClientModel
 			if (this.id != 0)
 			{
 				ResultSet rs = connector.executeSQL("UPDATE clients "
-						+"SET RevisionNum=" + this.revisionNum + " AND RegistrationDate='" + this.registrationDate
-						+ " AND Adress='" + this.adress
+						+"SET RevisionNum=" + this.revisionNum + "' AND RegistrationDate='" + this.registrationDate
+						+"' AND Adress='" + this.adress
 						+"' AND FIO='"+this.FIO+"' AND UID='"+this.UID
 						+"' AND PhoneNumber='"+this.phoneNumber
 						+"' AND DirectorFIO='"+this.directorFIO+"' AND DirectorUID='"+this.directorUID
