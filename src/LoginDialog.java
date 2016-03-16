@@ -6,6 +6,7 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import java.awt.event.MouseAdapter;
@@ -73,7 +74,7 @@ public class LoginDialog extends JDialog
 		contentPanel.add(pfPass);
 		{
 			JPanel buttonPane = new JPanel();
-			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT)); // TODO test commit
+			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("OK");
@@ -113,7 +114,7 @@ public class LoginDialog extends JDialog
 			if (getUserFromDB(user,pass)) loginresult = true;
 			else loginresult = false;
 			
-			LogDiag.setVisible(false);
+			if (loginresult) LogDiag.setVisible(false);
 		}
 	}
 	
@@ -132,6 +133,21 @@ public class LoginDialog extends JDialog
 		boolean res = false;
 		User.setCurrentUser(new UserModel());
 		UserModel um = UserModel.findUser(user, pass);
+		if (um.getID()==0)
+		{
+			JOptionPane.showMessageDialog(null, "Пользователь не найден.");
+			return res;
+		}
+		if (um.getLogin()!=user)
+		{
+			JOptionPane.showMessageDialog(null, "Неверный логин.");
+			return res;
+		}
+		if (um.getLogin()==user && um.getPassword()!=pass)
+		{
+			JOptionPane.showMessageDialog(null, "Неверный пароль.");
+			return res;
+		}
 		User.setCurrentUser(um);
 		if (um.getID()!=0) res=true;
 		return res;

@@ -214,9 +214,9 @@ public class ClientModel
 			else
 			{
 				ResultSet rs = connector.executeSQL("INSERT INTO clients(RevisionNum,RegistrationDate,Adress,FIO,UID,PhoneNumber,DirectorFIO,DirectorUID,DirectorAdress,DirectorNumber,CapitalSum)"
-						+" VALUES (" + this.revisionNum + ",'" + this.registrationDate + ",'"+this.adress
-						+"','"+this.FIO+"','"+this.UID+"','"+this.phoneNumber+",'"+this.directorFIO+"','"+this.directorUID
-						+"','"+this.directorAdress+"',"+this.directorNumber+"',"+this.capitalSum+")");
+						+" VALUES ('" + this.revisionNum + "','" + this.registrationDate + "','"+this.adress
+						+"','"+this.FIO+"','"+this.UID+"','"+this.phoneNumber+"','"+this.directorFIO+"','"+this.directorUID
+						+"','"+this.directorAdress+"','"+this.directorNumber+"','"+this.capitalSum+"')");
 			}
 
 		}

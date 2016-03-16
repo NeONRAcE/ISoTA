@@ -78,7 +78,7 @@ public class UserModel
 		{
 			ResultSet rs = connector
 					.executeSQL("SELECT * FROM users WHERE Login='" + login
-							+ "' AND Password='" + password + "'");
+							+ "' OR Password='" + password + "'");
 			if (rs != null)
 			{
 				res = new UserModel();
@@ -114,13 +114,13 @@ public class UserModel
 			if (this.id != 0)
 			{
 				ResultSet rs = connector.executeSQL("UPDATE users"
-						+" SET Login='" + this.login + "' AND Password='" + this.password + "' AND Name='"+this.name + "' AND LastName='"+this.lastName+"' AND SecurityClass="+this.securityClass
+						+" SET Login='" + this.login + "' AND Password='" + this.password + "' AND Name='"+this.name + "' AND LastName='"+this.lastName+"' AND SecurityClass='"+this.securityClass
 						+" WHERE ID="+this.id);
 			}
 			else
 			{
 				ResultSet rs = connector.executeSQL("INSERT INTO users(Login,Password,Name,LastName,SecurityClass)"
-						+" VALUES ('" + this.login + "','" + this.password + "','"+this.name + "','"+this.lastName+"',"+this.securityClass+")");
+						+" VALUES ('" + this.login + "','" + this.password + "','"+this.name + "','"+this.lastName+"',"+this.securityClass+"')");
 			}
 
 		}

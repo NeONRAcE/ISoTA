@@ -19,6 +19,10 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import javax.swing.JFormattedTextField;
+import java.awt.event.InputMethodListener;
+import java.awt.event.InputMethodEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class AddEditForm extends JDialog {
 
@@ -53,6 +57,22 @@ public class AddEditForm extends JDialog {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public boolean Validate()
+	{
+		boolean res = true;
+		if(textField.getText().isEmpty()) return false;
+		if(textField_1.getText().isEmpty()) return false;
+		if(textField_2.getText().isEmpty()) return false;
+		if(textField_3.getText().isEmpty()) return false;
+		if(textField_4.getText().isEmpty()) return false;
+		if(textField_5.getText().isEmpty()) return false;
+		if(textField_6.getText().isEmpty()) return false;
+		if(textField_7.getText().isEmpty()) return false;
+		if(textField_8.getText().isEmpty()) return false;
+		if(textField_9.getText().isEmpty()) return false;
+		return res;
 	}
 
 	/**
@@ -111,6 +131,18 @@ public class AddEditForm extends JDialog {
 		contentPanel.add(label);
 		
 		textField = new JTextField();
+		textField.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				Validate();
+			}
+		});
+		textField.addInputMethodListener(new InputMethodListener() {
+			public void caretPositionChanged(InputMethodEvent arg0) {
+			}
+			public void inputMethodTextChanged(InputMethodEvent arg0) {
+			}
+		});
 		textField.setBounds(216, 125, 86, 20);
 		contentPanel.add(textField);
 		textField.setColumns(10);
@@ -203,6 +235,13 @@ public class AddEditForm extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				okButton = new JButton("\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C");
+				okButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						if(!Validate()) okButton.setEnabled(false); //TODO onChange
+						else okButton.setEnabled(false);
+						
+					}
+				});
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				okButton.setVisible(false);

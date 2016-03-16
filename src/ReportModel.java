@@ -142,8 +142,8 @@ public class ReportModel {
 			else
 			{
 				ResultSet rs = connector.executeSQL("INSERT INTO reports(OperationDate,Kod,Overpayment,Paid,Returned,Sum)"
-						+" VALUES (" + this.operationDate + ",'" + this.kod + ",'"+this.overpayment
-						+"','"+this.paid+"','"+this.returned+"','"+this.sum+")");
+						+" VALUES ('" + this.operationDate + "','" + this.kod + "','"+this.overpayment
+						+"','"+this.paid+"','"+this.returned+"','"+this.sum+"')");
 			}
 
 		}
