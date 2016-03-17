@@ -39,6 +39,7 @@ public class AddEditFormReport extends JDialog {
 	public AddEditFormReport() {
 		setTitle("\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u043E\u0442\u0447\u0451\u0442");
 		setBounds(100, 100, 450, 316);
+		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);

@@ -104,6 +104,7 @@ public class MainWindow
 		frame.setResizable(false);
 		frame.addWindowListener(new FrameWindowListener());
 		frame.setBounds(100, 100, 686, 437);
+		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JMenuBar menuBar = new JMenuBar();
