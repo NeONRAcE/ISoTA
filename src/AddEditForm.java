@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.List;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -59,21 +60,21 @@ public class AddEditForm extends JDialog {
 		}
 	}
 	
-	public boolean Validate()
-	{
-		boolean res = true;
-		if(textField.getText().isEmpty()) return false;
-		if(textField_1.getText().isEmpty()) return false;
-		if(textField_2.getText().isEmpty()) return false;
-		if(textField_3.getText().isEmpty()) return false;
-		if(textField_4.getText().isEmpty()) return false;
-		if(textField_5.getText().isEmpty()) return false;
-		if(textField_6.getText().isEmpty()) return false;
-		if(textField_7.getText().isEmpty()) return false;
-		if(textField_8.getText().isEmpty()) return false;
-		if(textField_9.getText().isEmpty()) return false;
-		return res;
-	}
+//	public boolean Validate()
+//	{
+//		boolean res = true;
+//		if(textField.getText().isEmpty()) return false;
+//		if(textField_1.getText().isEmpty()) return false;
+//		if(textField_2.getText().isEmpty()) return false;
+//		if(textField_3.getText().isEmpty()) return false;
+//		if(textField_4.getText().isEmpty()) return false;
+//		if(textField_5.getText().isEmpty()) return false;
+//		if(textField_6.getText().isEmpty()) return false;
+//		if(textField_7.getText().isEmpty()) return false;
+//		if(textField_8.getText().isEmpty()) return false;
+//		if(textField_9.getText().isEmpty()) return false;
+//		return res;
+//	}
 
 	/**
 	 * Create the dialog.
@@ -101,29 +102,39 @@ public class AddEditForm extends JDialog {
 		ButtonGroup btnGroup = new ButtonGroup();
 
 		JRadioButton rbtnFiz = new JRadioButton(
-				"\u0424\u0438\u0437\u0438\u0447\u0435\u0441\u043A\u043E\u0435 \u043B\u0438\u0446\u043E");
+				"\u0424\u0438\u0437\u0438\u0447\u0435\u0441\u043A\u043E\u0435");
 
 		rbtnFiz.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				okButton.setVisible(true);
-				thisForm.setBounds(100, 100, 450, 355);
+				//thisForm.setBounds(100, 100, 450, 355);
+				textField_5.setEnabled(false);
+				textField_6.setEnabled(false);
+				textField_7.setEnabled(false);
+				textField_8.setEnabled(false);
+				textField_9.setEnabled(false);
 			}
 			
 		
 		});
-		rbtnFiz.setBounds(72, 69, 143, 23);
+		rbtnFiz.setBounds(167, 69, 107, 23);
 		contentPanel.add(rbtnFiz);
 		btnGroup.add(rbtnFiz);
 
 		JRadioButton rbtnJur = new JRadioButton(
-				"\u042E\u0440\u0438\u0434\u0438\u0447\u0435\u0441\u043A\u043E\u0435 \u043B\u0438\u0446\u043E");
+				"\u042E\u0440\u0438\u0434\u0438\u0447\u0435\u0441\u043A\u043E\u0435");
 		rbtnJur.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				okButton.setVisible(true);
-				thisForm.setBounds(100, 100, 450, 520);
+				//thisForm.setBounds(100, 100, 450, 520);
+				textField_5.setEnabled(true);
+				textField_6.setEnabled(true);
+				textField_7.setEnabled(true);
+				textField_8.setEnabled(true);
+				textField_9.setEnabled(true);
 			}
 		});
-		rbtnJur.setBounds(217, 69, 144, 23);
+		rbtnJur.setBounds(276, 69, 107, 23);
 		contentPanel.add(rbtnJur);
 		btnGroup.add(rbtnJur);
 		
@@ -135,7 +146,7 @@ public class AddEditForm extends JDialog {
 		textField.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent arg0) {
-				Validate();
+			//	Validate();
 			}
 		});
 		textField.addInputMethodListener(new InputMethodListener() {
@@ -229,6 +240,9 @@ public class AddEditForm extends JDialog {
 		label_10.setBounds(62, 407, 144, 14);
 		contentPanel.add(label_10);
 		
+		JLabel label_11 = new JLabel("\u041B\u0438\u0446\u043E:");
+		label_11.setBounds(62, 73, 61, 14);
+		contentPanel.add(label_11);
 
 		{
 			JPanel buttonPane = new JPanel();
@@ -238,14 +252,26 @@ public class AddEditForm extends JDialog {
 				okButton = new JButton("\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						if(!Validate()) okButton.setEnabled(false); //TODO onChange
-						else okButton.setEnabled(false);
+//						if(!Validate()) okButton.setEnabled(false); //TODO onChange
+//						else okButton.setEnabled(false);
+						
+					//	if(textField.) JOptionPane.showMessageDialog(null, "");
 						
 					}
 				});
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				okButton.setVisible(false);
+				textField.setEnabled(false);
+				textField_1.setEnabled(false);
+				textField_2.setEnabled(false);
+				textField_3.setEnabled(false);
+				textField_4.setEnabled(false);
+				textField_5.setEnabled(false);
+				textField_6.setEnabled(false);
+				textField_7.setEnabled(false);
+				textField_8.setEnabled(false);
+				textField_9.setEnabled(false);
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
