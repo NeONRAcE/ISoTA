@@ -18,6 +18,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import javax.swing.JFormattedTextField;
 import java.awt.event.InputMethodListener;
@@ -47,9 +48,6 @@ public class AddEditForm extends JDialog {
 	private JLabel label_9;
 	private JLabel label_10;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		try {
 			AddEditForm dialog = new AddEditForm();
@@ -76,9 +74,6 @@ public class AddEditForm extends JDialog {
 //		return res;
 //	}
 
-	/**
-	 * Create the dialog.
-	 */
 	public AddEditForm() {
 		setTitle("\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u043A\u043B\u0438\u0435\u043D\u0442\u0430");
 		setModal(true);
@@ -108,6 +103,11 @@ public class AddEditForm extends JDialog {
 			public void actionPerformed(ActionEvent arg0) {
 				okButton.setVisible(true);
 				//thisForm.setBounds(100, 100, 450, 355);
+				textField.setEnabled(true);
+				textField_1.setEnabled(true);
+				textField_2.setEnabled(true);
+				textField_3.setEnabled(true);
+				textField_4.setEnabled(true);
 				textField_5.setEnabled(false);
 				textField_6.setEnabled(false);
 				textField_7.setEnabled(false);
@@ -126,7 +126,11 @@ public class AddEditForm extends JDialog {
 		rbtnJur.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				okButton.setVisible(true);
-				//thisForm.setBounds(100, 100, 450, 520);
+				textField.setEnabled(true);
+				textField_1.setEnabled(true);
+				textField_2.setEnabled(true);
+				textField_3.setEnabled(true);
+				textField_4.setEnabled(true);
 				textField_5.setEnabled(true);
 				textField_6.setEnabled(true);
 				textField_7.setEnabled(true);
@@ -134,6 +138,7 @@ public class AddEditForm extends JDialog {
 				textField_9.setEnabled(true);
 			}
 		});
+			
 		rbtnJur.setBounds(276, 69, 107, 23);
 		contentPanel.add(rbtnJur);
 		btnGroup.add(rbtnJur);
@@ -143,6 +148,7 @@ public class AddEditForm extends JDialog {
 		contentPanel.add(label);
 		
 		textField = new JTextField();
+		textField.setEnabled(false);
 		textField.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent arg0) {
@@ -155,6 +161,7 @@ public class AddEditForm extends JDialog {
 			public void inputMethodTextChanged(InputMethodEvent arg0) {
 			}
 		});
+	
 		textField.setBounds(216, 125, 86, 20);
 		contentPanel.add(textField);
 		textField.setColumns(10);
@@ -164,6 +171,7 @@ public class AddEditForm extends JDialog {
 		contentPanel.add(label_2);
 		
 		textField_1 = new JTextField();
+		textField_1.setEnabled(false);
 		textField_1.setBounds(216, 156, 86, 20);
 		contentPanel.add(textField_1);
 		textField_1.setColumns(10);
@@ -173,21 +181,25 @@ public class AddEditForm extends JDialog {
 		contentPanel.add(label_3);
 		
 		textField_2 = new JTextField();
+		textField_2.setEnabled(false);
 		textField_2.setBounds(216, 187, 167, 20);
 		contentPanel.add(textField_2);
 		textField_2.setColumns(10);
 		
 		textField_3 = new JTextField();
+		textField_3.setEnabled(false);
 		textField_3.setBounds(216, 218, 167, 20);
 		contentPanel.add(textField_3);
 		textField_3.setColumns(10);
 		
 		textField_4 = new JTextField();
+		textField_4.setEnabled(false);
 		textField_4.setBounds(216, 249, 125, 20);
 		contentPanel.add(textField_4);
 		textField_4.setColumns(10);
 		
 		textField_5 = new JTextField();
+		textField_5.setEnabled(false);
 		textField_5.setBounds(216, 280, 167, 20);
 		contentPanel.add(textField_5);
 		textField_5.setColumns(10);
@@ -205,25 +217,29 @@ public class AddEditForm extends JDialog {
 		contentPanel.add(label_6);
 		
 		textField_6 = new JTextField();
+		textField_6.setEnabled(false);
 		textField_6.setBounds(216, 311, 167, 20);
 		contentPanel.add(textField_6);
 		textField_6.setColumns(10);
 		
 		textField_7 = new JTextField();
+		textField_7.setEnabled(false);
 		textField_7.setBounds(216, 342, 86, 20);
 		contentPanel.add(textField_7);
 		textField_7.setColumns(10);
 		
 		textField_8 = new JTextField();
+		textField_8.setEnabled(false);
 		textField_8.setBounds(216, 373, 86, 20);
 		contentPanel.add(textField_8);
 		textField_8.setColumns(10);
 		
 		textField_9 = new JTextField();
+		textField_9.setEnabled(false);
 		textField_9.setBounds(216, 404, 86, 20);
 		contentPanel.add(textField_9);
 		textField_9.setColumns(10);
-		
+				
 		JLabel label_7 = new JLabel("\u0424\u0418\u041E \u0434\u0438\u0440\u0435\u043A\u0442\u043E\u0440\u0430:");
 		label_7.setBounds(62, 314, 144, 14);
 		contentPanel.add(label_7);
@@ -252,30 +268,42 @@ public class AddEditForm extends JDialog {
 				okButton = new JButton("\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-//						if(!Validate()) okButton.setEnabled(false); //TODO onChange
-//						else okButton.setEnabled(false);
+						if(rbtnFiz.isSelected())
+						{
+							if(tfFIO.getText().length()==0 || textField.getText().length()==0 || textField_1.getText().length()==0 ||
+									textField_2.getText().length()==0 || textField_3.getText().length()==0 ||
+									textField_4.getText().length()==0) JOptionPane.showMessageDialog(null, "Вы заполнили не все поля.");
+						}
 						
-					//	if(textField.) JOptionPane.showMessageDialog(null, "");
+						if(rbtnJur.isSelected())
+						{
+							if(tfFIO.getText().length()==0 || textField.getText().length()==0 || textField_1.getText().length()==0 || 
+									textField_2.getText().length()==0 || textField_3.getText().length()==0 ||
+									textField_4.getText().length()==0 || textField_5.getText().length()==0 ||
+									textField_6.getText().length()==0 || textField_7.getText().length()==0 ||
+									textField_8.getText().length()==0 || textField_9.getText().length()==0) 
+								JOptionPane.showMessageDialog(null, "Вы заполнили не все поля.");
+						}
+						
+						ClientModel rm = new ClientModel();
+						
+						//rm.setRegistrationDate(textField.getText().toString());
+						rm.setRevisionNum(Integer.parseInt(textField.getText().toString()));
 						
 					}
 				});
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				okButton.setVisible(false);
-				textField.setEnabled(false);
-				textField_1.setEnabled(false);
-				textField_2.setEnabled(false);
-				textField_3.setEnabled(false);
-				textField_4.setEnabled(false);
-				textField_5.setEnabled(false);
-				textField_6.setEnabled(false);
-				textField_7.setEnabled(false);
-				textField_8.setEnabled(false);
-				textField_9.setEnabled(false);
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
 				cancelButton = new JButton("\u041E\u0442\u043C\u0435\u043D\u0430");
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						thisForm.dispose();
+					}
+				});
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 
