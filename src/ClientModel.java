@@ -60,26 +60,26 @@ public class ClientModel
 		this.FIO = newFIO;
 	}
 
-	private String UID;
+	private int UID;
 
-	public String getUID()
+	public int getUID()
 	{
 		return this.UID;
 	}
 
-	public void setUID(String newUID)
+	public void setUID(int newUID)
 	{
 		this.UID = newUID;
 	}
 
-	private String phoneNumber;
+	private int phoneNumber;
 
-	public String getPhoneNumber()
+	public int getPhoneNumber()
 	{
 		return this.phoneNumber;
 	}
 
-	public void setPhoneNumber(String newPhoneNumber)
+	public void setPhoneNumber(int newPhoneNumber)
 	{
 		this.phoneNumber = newPhoneNumber;
 	}
@@ -98,14 +98,14 @@ public class ClientModel
 		this.directorFIO = newDirectorFIO;
 	}
 
-	private String directorUID;
+	private int directorUID;
 
-	public String getDirectorUID()
+	public int getDirectorUID()
 	{
 		return this.directorUID;
 	}
 
-	public void setDirectorUID(String newDirectorUID)
+	public void setDirectorUID(int newDirectorUID)
 	{
 		this.directorUID = newDirectorUID;
 	}
@@ -169,10 +169,10 @@ public class ClientModel
 						t.registrationDate = rs.getDate("RegistrationDate");
 						t.adress = rs.getString("Adress");
 						t.FIO = rs.getString("FIO");
-						t.UID = rs.getString("UID");
-						t.phoneNumber = rs.getString("PhoneNumber");
+						t.UID = rs.getInt("UID");
+						t.phoneNumber = rs.getInt("PhoneNumber");
 						t.directorFIO = rs.getString("DirectorFIO");
-						t.directorUID = rs.getString("DirectorUID");
+						t.directorUID = rs.getInt("DirectorUID");
 						t.directorAdress = rs.getString("DirectorAdress");
 						t.directorNumber = rs.getInt("DirectorNumber");
 						t.capitalSum = rs.getInt("CapitalSum");
@@ -221,5 +221,72 @@ public class ClientModel
 
 		}
 		connector.SQLDisconnect();
+	}
+	
+	public boolean delete()
+	{
+		boolean res = false;
+		MySQLConnector connector = new MySQLConnector();
+		if (connector.SQLConnect())
+		{
+			if (this.getID() == 0)
+			{
+				res = false;
+			}
+			else
+			{
+				ResultSet rs = connector.executeSQL("DELETE FROM clients WHERE ID="+this.id);
+				res = true;
+			}
+		}
+		connector.SQLDisconnect();
+		return res;
+	}
+	
+	public static ClientModel[] findClientsByName(String name)
+	{
+		List<ClientModel> res = null;
+
+		MySQLConnector connector = new MySQLConnector();
+		if (connector.SQLConnect())
+		{
+			ResultSet rs = connector.executeSQL("SELECT * FROM clients WHERE FIO LIKE '%"+name+"%'");
+			if (rs != null)
+			{
+				res = new ArrayList<ClientModel>();
+
+				try
+				{
+					while (rs.next())
+					{
+						ClientModel t = new ClientModel();
+						t.id = rs.getInt("ID");
+						t.revisionNum = rs.getInt("RevisionNum");
+						t.registrationDate = rs.getDate("RegistrationDate");
+						t.adress = rs.getString("Adress");
+						t.FIO = rs.getString("FIO");
+						t.UID = rs.getInt("UID");
+						t.phoneNumber = rs.getInt("PhoneNumber");
+						t.directorFIO = rs.getString("DirectorFIO");
+						t.directorUID = rs.getInt("DirectorUID");
+						t.directorAdress = rs.getString("DirectorAdress");
+						t.directorNumber = rs.getInt("DirectorNumber");
+						t.capitalSum = rs.getInt("CapitalSum");
+						res.add(t);
+					}
+				}
+				catch (SQLException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		connector.SQLDisconnect();
+		
+		ClientModel[] result = new ClientModel[res.size()];
+		result = res.toArray(result);
+		
+		return result;
 	}
 }

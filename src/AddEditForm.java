@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
@@ -22,60 +23,82 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.swing.JFormattedTextField;
+
+import org.jdatepicker.*;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
+
 import java.awt.event.InputMethodListener;
 import java.awt.event.InputMethodEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
-public class AddEditForm extends JDialog {
+import org.jdatepicker.util.JDatePickerUtil;
+import org.jdatepicker.impl.JDatePanelImpl;
 
-	
+import java.util.Properties;
+
+public class AddEditForm extends JDialog
+{
+
 	private final JPanel contentPanel = new JPanel();
 	private JTextField tfFIO;
 	private JButton okButton;
 	private JButton cancelButton;
 	private JDialog thisForm;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
-	private JTextField textField_6;
-	private JTextField textField_7;
-	private JTextField textField_8;
-	private JTextField textField_9;
+	private JTextField tfRegDate;
+	private JTextField tfOkpo;
+	private JTextField tfAdress;
+	private JTextField tfUID;
+	private JTextField tfNumber;
+	private JTextField tfJurAdress;
+	private JTextField tfDirFIO;
+	private JTextField tfDirUID;
+	private JTextField tfDirNumber;
+	private JTextField tfSum;
 	private JLabel label_8;
 	private JLabel label_9;
 	private JLabel label_10;
+	private JDatePickerImpl datePicker;
+	private JRadioButton rbtnFiz;
+	private JRadioButton rbtnJur;
 
-	public static void main(String[] args) {
-		try {
+	public static void main(String[] args)
+	{
+		try
+		{
 			AddEditForm dialog = new AddEditForm();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			e.printStackTrace();
 		}
 	}
-	
-//	public boolean Validate()
-//	{
-//		boolean res = true;
-//		if(textField.getText().isEmpty()) return false;
-//		if(textField_1.getText().isEmpty()) return false;
-//		if(textField_2.getText().isEmpty()) return false;
-//		if(textField_3.getText().isEmpty()) return false;
-//		if(textField_4.getText().isEmpty()) return false;
-//		if(textField_5.getText().isEmpty()) return false;
-//		if(textField_6.getText().isEmpty()) return false;
-//		if(textField_7.getText().isEmpty()) return false;
-//		if(textField_8.getText().isEmpty()) return false;
-//		if(textField_9.getText().isEmpty()) return false;
-//		return res;
-//	}
 
-	public AddEditForm() {
+	public boolean Validate()
+	{
+		boolean res = true;
+		if (tfRegDate.getText().isEmpty()) return false;
+//		if (textField_1.getText().isEmpty()) return false;
+//		if (textField_2.getText().isEmpty()) return false;
+//		if (textField_3.getText().isEmpty()) return false;
+//		if (textField_4.getText().isEmpty()) return false;
+//		if (rbtnJur.isSelected())
+//		{
+//			if (textField_5.getText().isEmpty()) return false;
+//			if (textField_6.getText().isEmpty()) return false;
+//			if (textField_7.getText().isEmpty()) return false;
+//			if (textField_8.getText().isEmpty()) return false;
+//			if (textField_9.getText().isEmpty()) return false;
+//		}
+		
+		return res;
+	}
+
+	public AddEditForm()
+	{
 		setTitle("\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u043A\u043B\u0438\u0435\u043D\u0442\u0430");
 		setModal(true);
 		setBounds(100, 100, 450, 537);
@@ -97,166 +120,178 @@ public class AddEditForm extends JDialog {
 
 		ButtonGroup btnGroup = new ButtonGroup();
 
-		JRadioButton rbtnFiz = new JRadioButton(
+		rbtnFiz = new JRadioButton(
 				"\u0424\u0438\u0437\u0438\u0447\u0435\u0441\u043A\u043E\u0435");
 
 		rbtnFiz.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent arg0)
+			{
 				okButton.setVisible(true);
-				//thisForm.setBounds(100, 100, 450, 355);
-				textField.setEnabled(true);
-				textField_1.setEnabled(true);
-				textField_2.setEnabled(true);
-				textField_3.setEnabled(true);
-				textField_4.setEnabled(true);
-				textField_5.setEnabled(false);
-				textField_6.setEnabled(false);
-				textField_7.setEnabled(false);
-				textField_8.setEnabled(false);
-				textField_9.setEnabled(false);
+				// thisForm.setBounds(100, 100, 450, 355);
+				tfRegDate.setEnabled(true);
+				tfOkpo.setEnabled(true);
+				tfAdress.setEnabled(true);
+				tfUID.setEnabled(true);
+				tfNumber.setEnabled(true);
+				tfJurAdress.setEnabled(false);
+				tfDirFIO.setEnabled(false);
+				tfDirUID.setEnabled(false);
+				tfDirNumber.setEnabled(false);
+				tfSum.setEnabled(false);
 			}
-			
-		
+
 		});
 		rbtnFiz.setBounds(167, 69, 107, 23);
 		contentPanel.add(rbtnFiz);
 		btnGroup.add(rbtnFiz);
 
-		JRadioButton rbtnJur = new JRadioButton(
+		rbtnJur = new JRadioButton(
 				"\u042E\u0440\u0438\u0434\u0438\u0447\u0435\u0441\u043A\u043E\u0435");
 		rbtnJur.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent arg0)
+			{
 				okButton.setVisible(true);
-				textField.setEnabled(true);
-				textField_1.setEnabled(true);
-				textField_2.setEnabled(true);
-				textField_3.setEnabled(true);
-				textField_4.setEnabled(true);
-				textField_5.setEnabled(true);
-				textField_6.setEnabled(true);
-				textField_7.setEnabled(true);
-				textField_8.setEnabled(true);
-				textField_9.setEnabled(true);
+				tfRegDate.setEnabled(true);
+				tfOkpo.setEnabled(true);
+				tfAdress.setEnabled(true);
+				tfUID.setEnabled(true);
+				tfNumber.setEnabled(true);
+				tfJurAdress.setEnabled(true);
+				tfDirFIO.setEnabled(true);
+				tfDirUID.setEnabled(true);
+				tfDirNumber.setEnabled(true);
+				tfSum.setEnabled(true);
 			}
 		});
-			
+
 		rbtnJur.setBounds(276, 69, 107, 23);
 		contentPanel.add(rbtnJur);
 		btnGroup.add(rbtnJur);
-		
-		JLabel label = new JLabel("\u0414\u0430\u0442\u0430 \u0440\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u0438:");
+
+		JLabel label = new JLabel(
+				"\u0414\u0430\u0442\u0430 \u0440\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u0438:");
 		label.setBounds(62, 128, 144, 14);
 		contentPanel.add(label);
-		
-		textField = new JTextField();
-		textField.setEnabled(false);
-		textField.addFocusListener(new FocusAdapter() {
+
+		tfRegDate = new JTextField();
+		tfRegDate.setEnabled(false);
+		tfRegDate.addFocusListener(new FocusAdapter() {
 			@Override
-			public void focusLost(FocusEvent arg0) {
-			//	Validate();
+			public void focusLost(FocusEvent arg0)
+			{
+				
 			}
 		});
-		textField.addInputMethodListener(new InputMethodListener() {
-			public void caretPositionChanged(InputMethodEvent arg0) {
+		tfRegDate.addInputMethodListener(new InputMethodListener() {
+			public void caretPositionChanged(InputMethodEvent arg0)
+			{
 			}
-			public void inputMethodTextChanged(InputMethodEvent arg0) {
+
+			public void inputMethodTextChanged(InputMethodEvent arg0)
+			{
 			}
 		});
-	
-		textField.setBounds(216, 125, 86, 20);
-		contentPanel.add(textField);
-		textField.setColumns(10);
-		
+
+		tfRegDate.setBounds(216, 125, 86, 20);
+		contentPanel.add(tfRegDate);
+		tfRegDate.setColumns(10);
+
 		JLabel label_2 = new JLabel("\u041E\u041A\u041F\u041E:");
 		label_2.setBounds(62, 159, 46, 14);
 		contentPanel.add(label_2);
-		
-		textField_1 = new JTextField();
-		textField_1.setEnabled(false);
-		textField_1.setBounds(216, 156, 86, 20);
-		contentPanel.add(textField_1);
-		textField_1.setColumns(10);
-		
+
+		tfOkpo = new JTextField();
+		tfOkpo.setEnabled(false);
+		tfOkpo.setBounds(216, 156, 86, 20);
+		contentPanel.add(tfOkpo);
+		tfOkpo.setColumns(10);
+
 		JLabel label_3 = new JLabel("\u0410\u0434\u0440\u0435\u0441:");
 		label_3.setBounds(62, 190, 46, 14);
 		contentPanel.add(label_3);
-		
-		textField_2 = new JTextField();
-		textField_2.setEnabled(false);
-		textField_2.setBounds(216, 187, 167, 20);
-		contentPanel.add(textField_2);
-		textField_2.setColumns(10);
-		
-		textField_3 = new JTextField();
-		textField_3.setEnabled(false);
-		textField_3.setBounds(216, 218, 167, 20);
-		contentPanel.add(textField_3);
-		textField_3.setColumns(10);
-		
-		textField_4 = new JTextField();
-		textField_4.setEnabled(false);
-		textField_4.setBounds(216, 249, 125, 20);
-		contentPanel.add(textField_4);
-		textField_4.setColumns(10);
-		
-		textField_5 = new JTextField();
-		textField_5.setEnabled(false);
-		textField_5.setBounds(216, 280, 167, 20);
-		contentPanel.add(textField_5);
-		textField_5.setColumns(10);
-		
+
+		tfAdress = new JTextField();
+		tfAdress.setEnabled(false);
+		tfAdress.setBounds(216, 187, 167, 20);
+		contentPanel.add(tfAdress);
+		tfAdress.setColumns(10);
+
+		tfUID = new JTextField();
+		tfUID.setEnabled(false);
+		tfUID.setBounds(216, 218, 167, 20);
+		contentPanel.add(tfUID);
+		tfUID.setColumns(10);
+
+		tfNumber = new JTextField();
+		tfNumber.setEnabled(false);
+		tfNumber.setBounds(216, 249, 125, 20);
+		contentPanel.add(tfNumber);
+		tfNumber.setColumns(10);
+
+		tfJurAdress = new JTextField();
+		tfJurAdress.setEnabled(false);
+		tfJurAdress.setBounds(216, 280, 167, 20);
+		contentPanel.add(tfJurAdress);
+		tfJurAdress.setColumns(10);
+
 		JLabel label_4 = new JLabel("\u0418\u041D\u041D:");
 		label_4.setBounds(62, 221, 46, 14);
 		contentPanel.add(label_4);
-		
-		JLabel label_5 = new JLabel("\u0422\u0435\u043B\u0435\u0444\u043E\u043D:");
+
+		JLabel label_5 = new JLabel(
+				"\u0422\u0435\u043B\u0435\u0444\u043E\u043D:");
 		label_5.setBounds(62, 252, 92, 14);
 		contentPanel.add(label_5);
-		
-		JLabel label_6 = new JLabel("\u042E\u0440\u0438\u0434\u0438\u0447\u0435\u0441\u043A\u0438\u0439 \u0430\u0434\u0440\u0435\u0441:");
+
+		JLabel label_6 = new JLabel(
+				"\u042E\u0440\u0438\u0434\u0438\u0447\u0435\u0441\u043A\u0438\u0439 \u0430\u0434\u0440\u0435\u0441:");
 		label_6.setBounds(62, 283, 144, 14);
 		contentPanel.add(label_6);
-		
-		textField_6 = new JTextField();
-		textField_6.setEnabled(false);
-		textField_6.setBounds(216, 311, 167, 20);
-		contentPanel.add(textField_6);
-		textField_6.setColumns(10);
-		
-		textField_7 = new JTextField();
-		textField_7.setEnabled(false);
-		textField_7.setBounds(216, 342, 86, 20);
-		contentPanel.add(textField_7);
-		textField_7.setColumns(10);
-		
-		textField_8 = new JTextField();
-		textField_8.setEnabled(false);
-		textField_8.setBounds(216, 373, 86, 20);
-		contentPanel.add(textField_8);
-		textField_8.setColumns(10);
-		
-		textField_9 = new JTextField();
-		textField_9.setEnabled(false);
-		textField_9.setBounds(216, 404, 86, 20);
-		contentPanel.add(textField_9);
-		textField_9.setColumns(10);
-				
-		JLabel label_7 = new JLabel("\u0424\u0418\u041E \u0434\u0438\u0440\u0435\u043A\u0442\u043E\u0440\u0430:");
+
+		tfDirFIO = new JTextField();
+		tfDirFIO.setEnabled(false);
+		tfDirFIO.setBounds(216, 311, 167, 20);
+		contentPanel.add(tfDirFIO);
+		tfDirFIO.setColumns(10);
+
+		tfDirUID = new JTextField();
+		tfDirUID.setEnabled(false);
+		tfDirUID.setBounds(216, 342, 86, 20);
+		contentPanel.add(tfDirUID);
+		tfDirUID.setColumns(10);
+
+		tfDirNumber = new JTextField();
+		tfDirNumber.setEnabled(false);
+		tfDirNumber.setBounds(216, 373, 86, 20);
+		contentPanel.add(tfDirNumber);
+		tfDirNumber.setColumns(10);
+
+		tfSum = new JTextField();
+		tfSum.setEnabled(false);
+		tfSum.setBounds(216, 404, 86, 20);
+		contentPanel.add(tfSum);
+		tfSum.setColumns(10);
+
+		JLabel label_7 = new JLabel(
+				"\u0424\u0418\u041E \u0434\u0438\u0440\u0435\u043A\u0442\u043E\u0440\u0430:");
 		label_7.setBounds(62, 314, 144, 14);
 		contentPanel.add(label_7);
-		
-		label_8 = new JLabel("\u0418\u041D\u041D \u0434\u0438\u0440\u0435\u043A\u0442\u043E\u0440\u0430:");
+
+		label_8 = new JLabel(
+				"\u0418\u041D\u041D \u0434\u0438\u0440\u0435\u043A\u0442\u043E\u0440\u0430:");
 		label_8.setBounds(62, 345, 144, 14);
 		contentPanel.add(label_8);
-		
-		label_9 = new JLabel("\u0422\u0435\u043B\u0435\u0444\u043E\u043D \u0434\u0438\u0440\u0435\u043A\u0442\u043E\u0440\u0430:");
+
+		label_9 = new JLabel(
+				"\u0422\u0435\u043B\u0435\u0444\u043E\u043D \u0434\u0438\u0440\u0435\u043A\u0442\u043E\u0440\u0430:");
 		label_9.setBounds(62, 376, 144, 14);
 		contentPanel.add(label_9);
-		
-		label_10 = new JLabel("\u0421\u0443\u043C\u043C\u0430 \u043A\u0430\u043F\u0438\u0442\u0430\u043B\u0430:");
+
+		label_10 = new JLabel(
+				"\u0421\u0443\u043C\u043C\u0430 \u043A\u0430\u043F\u0438\u0442\u0430\u043B\u0430:");
 		label_10.setBounds(62, 407, 144, 14);
 		contentPanel.add(label_10);
-		
+
 		JLabel label_11 = new JLabel("\u041B\u0438\u0446\u043E:");
 		label_11.setBounds(62, 73, 61, 14);
 		contentPanel.add(label_11);
@@ -266,31 +301,46 @@ public class AddEditForm extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				okButton = new JButton("\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C");
+				okButton = new JButton(
+						"\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C");
 				okButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-						if(rbtnFiz.isSelected())
+					public void actionPerformed(ActionEvent arg0)
+					{
+						if (Validate())
 						{
-							if(tfFIO.getText().length()==0 || textField.getText().length()==0 || textField_1.getText().length()==0 ||
-									textField_2.getText().length()==0 || textField_3.getText().length()==0 ||
-									textField_4.getText().length()==0) JOptionPane.showMessageDialog(null, "Вы заполнили не все поля.");
+							try
+							{
+								Date d = TextParser.parseDate(tfRegDate.getText(),"Дата регистрации");
+								Integer okpo = TextParser.parseInteger(tfOkpo.getText(), "ОКПО");
+								Integer UID = TextParser.parseInteger(tfUID.getText(), "ИНН");
+								Integer number = TextParser.parseInteger(tfNumber.getText(), "Номер");
+								Integer dirUID = TextParser.parseInteger(tfDirUID.getText(), "ИНН Директора");
+								Integer dirNumber = TextParser.parseInteger(tfDirNumber.getText(), "Телефон Директора");
+								Integer sum = TextParser.parseInteger(tfSum.getText(), "Сумма капитала");
+								
+								ClientModel cm = new ClientModel();
+								cm.setRegistrationDate(d);
+								cm.setRevisionNum(okpo);
+								cm.setAdress(tfAdress.getText().toString());
+								cm.setUID(UID);
+								cm.setPhoneNumber(number);
+								cm.setDirectorAdress(tfJurAdress.getText().toString());
+								cm.setDirectorFIO(tfDirFIO.getText().toString());
+								cm.setDirectorUID(dirUID);
+								cm.setDirectorNumber(dirNumber);
+								cm.setCapitalSum(sum);
+								cm.save();
+							}
+							catch (Exception e)
+							{
+								JOptionPane.showMessageDialog(null, e.getMessage());
+							}
+							
 						}
-						
-						if(rbtnJur.isSelected())
+						else
 						{
-							if(tfFIO.getText().length()==0 || textField.getText().length()==0 || textField_1.getText().length()==0 || 
-									textField_2.getText().length()==0 || textField_3.getText().length()==0 ||
-									textField_4.getText().length()==0 || textField_5.getText().length()==0 ||
-									textField_6.getText().length()==0 || textField_7.getText().length()==0 ||
-									textField_8.getText().length()==0 || textField_9.getText().length()==0) 
-								JOptionPane.showMessageDialog(null, "Вы заполнили не все поля.");
+							JOptionPane.showMessageDialog(null, "Не все поля заполнены.");
 						}
-						
-						ClientModel rm = new ClientModel();
-						
-						//rm.setRegistrationDate(textField.getText().toString());
-						rm.setRevisionNum(Integer.parseInt(textField_1.getText().toString()));
-						
 					}
 				});
 				okButton.setActionCommand("OK");
@@ -299,15 +349,16 @@ public class AddEditForm extends JDialog {
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
-				cancelButton = new JButton("\u041E\u0442\u043C\u0435\u043D\u0430");
+				cancelButton = new JButton(
+						"\u041E\u0442\u043C\u0435\u043D\u0430");
 				cancelButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
+					public void actionPerformed(ActionEvent arg0)
+					{
 						thisForm.dispose();
 					}
 				});
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
-
 			}
 		}
 	}
