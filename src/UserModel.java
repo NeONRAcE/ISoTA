@@ -120,7 +120,7 @@ public class UserModel
 			else
 			{
 				ResultSet rs = connector.executeSQL("INSERT INTO users(Login,Password,Name,LastName,SecurityClass)"
-						+" VALUES ('" + this.login + "','" + this.password + "','"+this.name + "','"+this.lastName+"',"+this.securityClass+"')");
+						+" VALUES ('" + this.login + "','" + this.password + "','"+this.name + "','"+this.lastName+"','"+this.securityClass+"')");
 			}
 
 		}

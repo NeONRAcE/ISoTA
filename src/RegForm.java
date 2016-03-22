@@ -122,6 +122,7 @@ public class RegForm extends JDialog {
 								um.setName(textField_2.getText().toString());
 								um.setLastName(textField_3.getText().toString());
 								um.setPassword(passwordField.getPassword().toString());
+								//um.setSecurityClass((byte)comboBox.getSelectedIndex());
 								um.save();
 							}
 							catch (Exception e)
