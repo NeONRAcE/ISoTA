@@ -16,7 +16,7 @@ public class TextParser
 			int year = Integer.parseInt(vals[2]);
 			date = new Date(new GregorianCalendar(year,month,day).getTimeInMillis());
 		}
-		else throw new Exception("Неверный формат даты. Поле-"+field);
+		else throw new Exception("Неверный формат даты. Поле: "+field);
 		return date;
 	}
 	
@@ -42,18 +42,17 @@ public class TextParser
 		return res;
 	}
 	
-	public static Double parseDouble (String text, String field) throws Exception
+	public static Float parseFloat (String text, String field) throws Exception
 	{
-		Double res = 0.0;
+		Float res = (float) 0.0;
 		try
 		{
-			res = Double.parseDouble(text);
+			res = Float.parseFloat(text);
 		}
 		catch (Exception e)
 		{
 			throw new Exception("Неверное значение с плавающей точкой. Поле: "+field);
 		}
 		return res;
-	}
-	
+	}	
 }

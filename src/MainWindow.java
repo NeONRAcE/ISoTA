@@ -84,6 +84,7 @@ public class MainWindow
 	private JMenuItem clientsDeleteAll;
 	private JMenuItem clientsSearch;
 	private JPanel panel_1;
+	private JMenu menu;
 
 	/** Launch the application. */
 	public static void main(String[] args)
@@ -208,6 +209,17 @@ public class MainWindow
 
 		JMenuItem exitExit = new JMenuItem("\u0412\u044B\u0445\u043E\u0434");
 		menuExit.add(exitExit);
+		
+		menu = new JMenu("\u0410\u0434\u043C\u0438\u043D. \u043F\u0430\u043D\u0435\u043B\u044C");
+		menuBar.add(menu);
+		
+		JMenuItem menuItem = new JMenuItem("\u0420\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u044F");
+		menuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+			}
+		});
+		menu.add(menuItem);
 		frame.getContentPane().setLayout(null);
 				
 						panelClients = new JPanel();
@@ -318,6 +330,32 @@ public class MainWindow
 			reportsDeleteAll.setEnabled(false);
 			reportsEdit.setEnabled(false);
 			reportsSave.setEnabled(false);
+			clientsAdd.setEnabled(false);
+			clientsDelete.setEnabled(false);
+			clientsDeleteAll.setEnabled(false);
+			clientsEdit.setEnabled(false);
+			clientsSave.setEnabled(false);
+			menu.setVisible(false);
+		}
+		
+		if(sclass == 4) // нач анал
+		{
+			reportsCreate.setEnabled(false);
+			reportsDelete.setEnabled(false);
+			reportsDeleteAll.setEnabled(false);
+			reportsEdit.setEnabled(false);
+			reportsSave.setEnabled(false);
+			menu.setVisible(false);
+		}
+		
+		if(sclass == 3)
+		{
+			menu.setVisible(false);
+		}
+		
+		if(sclass == 2)
+		{
+			menu.setVisible(false);
 		}
 	}
 	
@@ -376,8 +414,7 @@ public class MainWindow
 			ClientModel cm = listFIO.getSelectedValue().client;
 			if (cm != null)
 			{
-				DefaultTableModel model = (DefaultTableModel) tableClientInfo
-						.getModel();
+				DefaultTableModel model = (DefaultTableModel) tableClientInfo.getModel();
 				model.setRowCount(11);
 				model.setColumnCount(2);
 				model.setValueAt("Номер инспекции", 0, 0);

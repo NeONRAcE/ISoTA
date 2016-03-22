@@ -23,14 +23,14 @@ public class ReportModel {
 		this.operationDate = newOperationDate;
 	}
 	
-	private int kod;
+	private String kod;
 	
-	public int getKod()
+	public String getKod()
 	{
 		return this.kod;
 	}
 	
-	public void setKod(int newKod)
+	public void setKod(String newKod)
 	{
 		this.kod = newKod;
 	}
@@ -102,7 +102,7 @@ public class ReportModel {
 						ReportModel r = new ReportModel();
 						r.id = rs.getInt("ID");
 						r.operationDate = rs.getDate("Operation Date");
-						r.kod = rs.getInt("Kod");
+						r.kod = rs.getString("Kod");
 						r.overpayment = rs.getFloat("Overpayment");
 						r.paid = rs.getFloat("Paid");
 						r.returned = rs.getFloat("Returned");
@@ -148,5 +148,25 @@ public class ReportModel {
 
 		}
 		connector.SQLDisconnect();
+	}
+	
+	public boolean delete()
+	{
+		boolean res = false;
+		MySQLConnector connector = new MySQLConnector();
+		if (connector.SQLConnect())
+		{
+			if (this.getID() == 0)
+			{
+				res = false;
+			}
+			else
+			{
+				ResultSet rs = connector.executeSQL("DELETE FROM clients WHERE ID="+this.id);
+				res = true;
+			}
+		}
+		connector.SQLDisconnect();
+		return res;
 	}
 }
