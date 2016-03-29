@@ -1,6 +1,9 @@
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
+
+import javax.swing.table.DefaultTableModel;
 
 public class ReportModel {
 	
@@ -125,6 +128,22 @@ public class ReportModel {
 		return result;
 	}
 	
+	public static DefaultTableModel findReportsAllTM() throws SQLException
+	{
+		ResultSet res = null;
+
+		MySQLConnector connector = new MySQLConnector();
+		if (connector.SQLConnect())
+		{
+			res = connector.executeSQL("SELECT * FROM reports"); // TODO занести в базу + допилить поля
+			
+		}
+		DefaultTableModel dtm = buildTableModel(res);
+		connector.SQLDisconnect();
+		
+		return dtm;
+	}
+	
 	public void save()
 	{
 		MySQLConnector connector = new MySQLConnector();
@@ -132,18 +151,18 @@ public class ReportModel {
 		{
 			if (this.id != 0)
 			{
-				ResultSet rs = connector.executeSQL("UPDATE reports "
-						+ "SET OperationDate=" + this.operationDate + "' AND Kod='" + this.kod
-						+ "' AND Overpayment='" + this.overpayment
-						+ "' AND Paid='"+this.paid + "' AND Returned='" + this.returned
-						+ "' AND Sum='" + this.sum + " WHERE ID=" + this.id);
+				int rs = connector.executeUpdate("UPDATE reports "
+						+ "SET OperationDate=" + this.operationDate + " AND Kod='" + this.kod
+						+ "' AND Overpayment=" + this.overpayment
+						+ " AND Paid="+this.paid + " AND Returned=" + this.returned
+						+ " AND Sum=" + this.sum + " WHERE ID=" + this.id);
 						
 			}
 			else
 			{
-				ResultSet rs = connector.executeSQL("INSERT INTO reports(OperationDate,Kod,Overpayment,Paid,Returned,Sum)"
-						+" VALUES ('" + this.operationDate + "','" + this.kod + "','"+this.overpayment
-						+"','"+this.paid+"','"+this.returned+"','"+this.sum+"')");
+				int rs = connector.executeUpdate("INSERT INTO reports(OperationDate,Kod,Overpayment,Paid,Returned,Sum)"
+						+" VALUES (" + this.operationDate + ",'" + this.kod + "',"+this.overpayment
+						+","+this.paid+","+this.returned+","+this.sum+")");
 			}
 
 		}
@@ -168,5 +187,32 @@ public class ReportModel {
 		}
 		connector.SQLDisconnect();
 		return res;
+	}
+	
+	private static DefaultTableModel buildTableModel(ResultSet rs)
+	        throws SQLException {
+
+	    ResultSetMetaData metaData = rs.getMetaData();
+
+	    // names of columns
+	    Vector<String> columnNames = new Vector<String>();
+	    int columnCount = metaData.getColumnCount();
+	    for (int column = 1; column <= columnCount; column++) {
+	        columnNames.add(metaData.getColumnName(column));
+	    }
+	    //columns.add(columnNames);
+
+	    // data of the table
+	    Vector<Vector<Object>> data = new Vector<Vector<Object>>();
+	    while (rs.next()) {
+	        Vector<Object> vector = new Vector<Object>();
+	        for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
+	            vector.add(rs.getObject(columnIndex));
+	        }
+	        data.add(vector);
+	    }
+
+	    return new DefaultTableModel(data, columnNames);
+
 	}
 }

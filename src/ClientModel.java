@@ -201,22 +201,22 @@ public class ClientModel
 		{
 			if (this.id != 0)
 			{
-				ResultSet rs = connector.executeSQL("UPDATE clients "
-						+"SET RevisionNum=" + this.revisionNum + "' AND RegistrationDate='" + this.registrationDate
-						+"' AND Adress='" + this.adress
-						+"' AND FIO='"+this.FIO+"' AND UID='"+this.UID
-						+"' AND PhoneNumber='"+this.phoneNumber
-						+"' AND DirectorFIO='"+this.directorFIO+"' AND DirectorUID='"+this.directorUID
-						+"' AND DirectorAdress='"+this.directorAdress+"' AND DirectorNumber='"+this.directorNumber
-						+"' AND CapitalSum='"+this.capitalSum
+				int rs = connector.executeUpdate("UPDATE clients "
+						+"SET RevisionNum=" + this.revisionNum + " AND RegistrationDate=" + this.registrationDate
+						+" AND Adress='" + this.adress
+						+"' AND FIO='"+this.FIO+"' AND UID="+this.UID
+						+" AND PhoneNumber="+this.phoneNumber
+						+" AND DirectorFIO='"+this.directorFIO+"' AND DirectorUID="+this.directorUID
+						+" AND DirectorAdress='"+this.directorAdress+"' AND DirectorNumber="+this.directorNumber
+						+" AND CapitalSum="+this.capitalSum
 						+" WHERE ID="+this.id);
 			}
 			else
 			{
-				ResultSet rs = connector.executeSQL("INSERT INTO clients(RevisionNum,RegistrationDate,Adress,FIO,UID,PhoneNumber,DirectorFIO,DirectorUID,DirectorAdress,DirectorNumber,CapitalSum)"
-						+" VALUES ('" + this.revisionNum + "','" + this.registrationDate + "','"+this.adress
-						+"','"+this.FIO+"','"+this.UID+"','"+this.phoneNumber+"','"+this.directorFIO+"','"+this.directorUID
-						+"','"+this.directorAdress+"','"+this.directorNumber+"','"+this.capitalSum+"')");
+				int rs = connector.executeUpdate("INSERT INTO clients(RevisionNum,RegistrationDate,Adress,FIO,UID,PhoneNumber,DirectorFIO,DirectorUID,DirectorAdress,DirectorNumber,CapitalSum)"
+						+" VALUES (" + this.revisionNum + "," + this.registrationDate + ",'"+this.adress
+						+"','"+this.FIO+"',"+this.UID+","+this.phoneNumber+",'"+this.directorFIO+"',"+this.directorUID
+						+",'"+this.directorAdress+"',"+this.directorNumber+","+this.capitalSum+")");
 			}
 
 		}

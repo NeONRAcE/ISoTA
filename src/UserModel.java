@@ -113,14 +113,14 @@ public class UserModel
 		{
 			if (this.id != 0)
 			{
-				ResultSet rs = connector.executeSQL("UPDATE users"
-						+" SET Login='" + this.login + "' AND Password='" + this.password + "' AND Name='"+this.name + "' AND LastName='"+this.lastName+"' AND SecurityClass='"+this.securityClass
+				int res = connector.executeUpdate("UPDATE users"
+						+" SET Login='" + this.login + "' AND Password='" + this.password + "' AND Name='"+this.name + "' AND LastName='"+this.lastName+"' AND SecurityClass="+this.securityClass
 						+" WHERE ID="+this.id);
 			}
 			else
 			{
-				ResultSet rs = connector.executeSQL("INSERT INTO users(Login,Password,Name,LastName,SecurityClass)"
-						+" VALUES ('" + this.login + "','" + this.password + "','"+this.name + "','"+this.lastName+"','"+this.securityClass+"')");
+				int rs = connector.executeUpdate("INSERT INTO users(Login,Password,Name,LastName,SecurityClass)"
+						+" VALUES ('" + this.login + "','" + this.password + "','"+this.name + "','"+this.lastName+"',"+this.securityClass+")");
 			}
 
 		}

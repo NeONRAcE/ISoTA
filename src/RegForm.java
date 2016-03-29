@@ -82,7 +82,7 @@ public class RegForm extends JDialog {
 		textField_3.setColumns(10);
 		
 		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"\u0410\u0434\u043C\u0438\u043D\u0438\u0441\u0442\u0440\u0430\u0442\u043E\u0440", "\u041D\u0430\u0447. \u043E\u0442\u0434\u0435\u043B\u0430 \u043F\u0438\u043D\u0430\u043D\u0438\u044F \u0445\u0443\u0451\u0432", "\u041D\u0430\u0447. \u043E\u0442\u0434\u0435\u043B\u0430 \u0430\u043D\u0430\u043B\u0438\u0437\u0430 \u0438 \u0443\u0447\u0451\u0442\u0430", "\u0421\u043E\u0442\u0440. \u043E\u0442\u0434\u0435\u043B\u0430 \u043F\u0438\u043D\u0430\u043D\u0438\u044F \u0445\u0443\u0451\u0432", "\u0421\u043E\u0442\u0440. \u043E\u0442\u0434\u0435\u043B\u0430 \u0430\u043D\u0430\u043B\u0438\u0437\u0430 \u0438 \u0443\u0447\u0451\u0442\u0430"}));
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"\u041D\u0430\u0447. \u043E\u0442\u0434\u0435\u043B\u0430 \u0417\u041E\u043F\u043B", "\u041D\u0430\u0447. \u043E\u0442\u0434\u0435\u043B\u0430 \u0410\u043D\u0423\u0447", "\u0421\u043E\u0442\u0440. \u043E\u0442\u0434\u0435\u043B\u0430 \u0417\u041E\u043F\u043B", "\u0421\u043E\u0442\u0440. \u043E\u0442\u0434\u0435\u043B\u0430 \u0410\u043D\u0423\u0447", "\u0411\u043E\u0433"}));
 		comboBox.setBounds(141, 161, 190, 20);
 		contentPanel.add(comboBox);
 		
@@ -122,7 +122,7 @@ public class RegForm extends JDialog {
 								um.setName(textField_2.getText().toString());
 								um.setLastName(textField_3.getText().toString());
 								um.setPassword(passwordField.getPassword().toString());
-								//um.setSecurityClass((byte)comboBox.getSelectedIndex());
+								um.setSecurityClass((byte)(comboBox.getSelectedIndex()+1));
 								um.save();
 							}
 							catch (Exception e)
