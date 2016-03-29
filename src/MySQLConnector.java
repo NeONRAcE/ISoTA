@@ -57,4 +57,21 @@ public class MySQLConnector
 		return res;
 	}
 	
+	public int executeUpdate(String sql)
+	{
+		int res = 0;
+		
+		try
+		{
+			Statement stm = this.con.createStatement();
+			res = stm.executeUpdate(sql);
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
+	
 }

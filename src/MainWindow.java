@@ -14,7 +14,11 @@ import javax.swing.JMenu;
 import javax.swing.JPanel;
 
 import java.awt.FlowLayout;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.Vector;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
@@ -38,9 +42,12 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+
 import java.awt.Color;
 import java.awt.SystemColor;
+
 import javax.swing.UIManager;
+import javax.swing.border.LineBorder;
 
 public class MainWindow
 {
@@ -133,6 +140,20 @@ public class MainWindow
 				"\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u0441\u043F\u0438\u0441\u043E\u043A");
 		reportsOpen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				panelClients.setVisible(false);
+				panelReports.setVisible(true);
+				try
+				{
+					tableReports.setModel(ReportModel.findReportsAllTM());
+					((DefaultTableModel)tableReports.getModel()).fireTableDataChanged();
+					
+				}
+				catch (SQLException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 			}
 		});
 		menuReports.add(reportsOpen);
@@ -221,6 +242,23 @@ public class MainWindow
 		});
 		menu.add(menuItem);
 		frame.getContentPane().setLayout(null);
+						
+								panelReports = new JPanel();
+								panelReports.setBounds(0, 0, 680, 366);
+								frame.getContentPane().add(panelReports);
+								panelReports.setLayout(null);
+								
+										JLabel labelReports = new JLabel(
+												"\u0421\u043F\u0438\u0441\u043E\u043A \u043E\u0442\u0447\u0435\u0442\u043E\u0432");
+										labelReports.setFont(new Font("Tahoma", Font.PLAIN, 14));
+										labelReports.setBounds(278, 26, 110, 14);
+										panelReports.add(labelReports);
+										
+												tableReports = new JTable();
+												tableReports.setBorder(new LineBorder(new Color(0, 0, 0)));
+												tableReports.setRowSelectionAllowed(false);
+												tableReports.setBounds(52, 51, 571, 237);
+												panelReports.add(tableReports);
 				
 						panelClients = new JPanel();
 						panelClients.setBounds(0, 0, 680, 366);
@@ -270,24 +308,6 @@ public class MainWindow
 																button.addActionListener(new ButtonActionListener());
 																button.setBounds(253, 7, 115, 23);
 																panel_1.add(button);
-																panelClients.setVisible(false);
-		
-				panelReports = new JPanel();
-				panelReports.setBounds(0, 0, 680, 366);
-				frame.getContentPane().add(panelReports);
-				panelReports.setLayout(null);
-				
-						JLabel labelReports = new JLabel(
-								"\u0421\u043F\u0438\u0441\u043E\u043A \u043E\u0442\u0447\u0435\u0442\u043E\u0432");
-						labelReports.setFont(new Font("Tahoma", Font.PLAIN, 14));
-						labelReports.setBounds(278, 26, 110, 14);
-						panelReports.add(labelReports);
-						
-								tableReports = new JTable();
-								tableReports.setRowSelectionAllowed(false);
-								tableReports.setBounds(47, 304, 571, -237);
-								panelReports.add(tableReports);
-								panelReports.setVisible(false);
 
 		JPanel panel = new JPanel();
 		panel.setBounds(0, 368, 680, 20);
@@ -323,7 +343,7 @@ public class MainWindow
 	private void setSecurityRights()
 	{
 		byte sclass = User.getCurrentUser().getSecurityClass();
-		if (sclass == 5) // сотрудник анал.
+		if (sclass == 3) // сотрудник анал.
 		{
 			reportsCreate.setEnabled(false);
 			reportsDelete.setEnabled(false);
@@ -338,7 +358,7 @@ public class MainWindow
 			menu.setVisible(false);
 		}
 		
-		if(sclass == 4) // нач анал
+		if(sclass == 2) // нач анал
 		{
 			reportsCreate.setEnabled(false);
 			reportsDelete.setEnabled(false);
@@ -348,12 +368,7 @@ public class MainWindow
 			menu.setVisible(false);
 		}
 		
-		if(sclass == 3)
-		{
-			menu.setVisible(false);
-		}
-		
-		if(sclass == 2)
+		if(sclass == 1 || sclass == 4)
 		{
 			menu.setVisible(false);
 		}
@@ -380,6 +395,7 @@ public class MainWindow
 						+ User.getCurrentUser().getName() + " "
 						+ User.getCurrentUser().getLastName());
 			}
+			updateClientList();
 		}
 	}
 
@@ -391,19 +407,26 @@ public class MainWindow
 		}
 	}
 
+	private void updateClientList()
+	{
+		clients = ClientModel.findClientsAll();
+		DefaultListModel<fiolist> listmodel = new DefaultListModel<fiolist>();
+		for (ClientModel client : clients)
+		{
+			listmodel.addElement(new fiolist(client));
+		}
+		listFIO.setModel(listmodel);
+		panelClients.setVisible(true);
+	}
+	
 	private class ClientsOpenActionListener implements ActionListener
 	{
 
 		public void actionPerformed(ActionEvent arg0)
 		{
-			clients = ClientModel.findClientsAll();
-			DefaultListModel<fiolist> listmodel = new DefaultListModel<fiolist>();
-			for (ClientModel client : clients)
-			{
-				listmodel.addElement(new fiolist(client));
-			}
-			listFIO.setModel(listmodel);
 			panelClients.setVisible(true);
+			panelReports.setVisible(false);
+			updateClientList();
 		}
 	}
 
@@ -460,4 +483,7 @@ public class MainWindow
 			panelClients.setVisible(true);
 		}
 	}
+	
+	
+
 }
