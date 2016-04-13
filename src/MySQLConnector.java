@@ -65,6 +65,7 @@ public class MySQLConnector
 		{
 			Statement stm = this.con.createStatement();
 			res = stm.executeUpdate(sql);
+			this.con.setAutoCommit(false); this.con.commit(); this.con.setAutoCommit(true);
 		}
 		catch (SQLException e)
 		{

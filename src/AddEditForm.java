@@ -40,7 +40,7 @@ import java.util.Properties;
 
 public class AddEditForm extends JDialog
 {
-
+	private ClientModel client;
 	private final JPanel contentPanel = new JPanel();
 	private JTextField tfFIO;
 	private JButton okButton;
@@ -62,6 +62,7 @@ public class AddEditForm extends JDialog
 	private JDatePickerImpl datePicker;
 	private JRadioButton rbtnFiz;
 	private JRadioButton rbtnJur;
+	private AddEditForm dialog;
 
 	public static void main(String[] args)
 	{
@@ -81,24 +82,82 @@ public class AddEditForm extends JDialog
 	{
 		boolean res = true;
 		if (tfRegDate.getText().isEmpty()) return false;
-//		if (textField_1.getText().isEmpty()) return false;
-//		if (textField_2.getText().isEmpty()) return false;
-//		if (textField_3.getText().isEmpty()) return false;
-//		if (textField_4.getText().isEmpty()) return false;
-//		if (rbtnJur.isSelected())
-//		{
-//			if (textField_5.getText().isEmpty()) return false;
-//			if (textField_6.getText().isEmpty()) return false;
-//			if (textField_7.getText().isEmpty()) return false;
-//			if (textField_8.getText().isEmpty()) return false;
-//			if (textField_9.getText().isEmpty()) return false;
-//		}
-		
+		// if (textField_1.getText().isEmpty()) return false;
+		// if (textField_2.getText().isEmpty()) return false;
+		// if (textField_3.getText().isEmpty()) return false;
+		// if (textField_4.getText().isEmpty()) return false;
+		// if (rbtnJur.isSelected())
+		// {
+		// if (textField_5.getText().isEmpty()) return false;
+		// if (textField_6.getText().isEmpty()) return false;
+		// if (textField_7.getText().isEmpty()) return false;
+		// if (textField_8.getText().isEmpty()) return false;
+		// if (textField_9.getText().isEmpty()) return false;
+		// }
+
 		return res;
+	}
+
+	public void setModel(ClientModel cm)
+	{
+		this.client = cm;
+		tfFIO.setText(cm.getFIO());
+		if (cm.getDirectorAdress().equals(""))
+		{
+			rbtnFiz.setSelected(true);
+			FizAct();
+		}
+		else
+		{
+			rbtnJur.setSelected(true);
+			JurAct();
+		}
+		Date d = cm.getRegistrationDate();
+		String sd = d.toString();
+		String[] vals = sd.split("-");
+		tfRegDate.setText(vals[2]+"/"+vals[1]+"/"+vals[0]);
+		tfOkpo.setText(cm.getRevisionNum().toString());
+		tfAdress.setText(cm.getAdress());
+		tfUID.setText(cm.getUID().toString());
+		tfNumber.setText(cm.getPhoneNumber().toString());
+		tfAdress.setText(cm.getAdress());
+		// TODO jur
+	}
+
+	private void FizAct()
+	{
+		okButton.setVisible(true);
+		// thisForm.setBounds(100, 100, 450, 355);
+		tfRegDate.setEnabled(true);
+		tfOkpo.setEnabled(true);
+		tfAdress.setEnabled(true);
+		tfUID.setEnabled(true);
+		tfNumber.setEnabled(true);
+		tfJurAdress.setEnabled(false);
+		tfDirFIO.setEnabled(false);
+		tfDirUID.setEnabled(false);
+		tfDirNumber.setEnabled(false);
+		tfSum.setEnabled(false);
+	}
+
+	private void JurAct()
+	{
+		okButton.setVisible(true);
+		tfRegDate.setEnabled(true);
+		tfOkpo.setEnabled(true);
+		tfAdress.setEnabled(true);
+		tfUID.setEnabled(true);
+		tfNumber.setEnabled(true);
+		tfJurAdress.setEnabled(true);
+		tfDirFIO.setEnabled(true);
+		tfDirUID.setEnabled(true);
+		tfDirNumber.setEnabled(true);
+		tfSum.setEnabled(true);
 	}
 
 	public AddEditForm()
 	{
+		dialog = this;
 		setTitle("\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u043A\u043B\u0438\u0435\u043D\u0442\u0430");
 		setModal(true);
 		setBounds(100, 100, 450, 537);
@@ -126,18 +185,7 @@ public class AddEditForm extends JDialog
 		rbtnFiz.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0)
 			{
-				okButton.setVisible(true);
-				// thisForm.setBounds(100, 100, 450, 355);
-				tfRegDate.setEnabled(true);
-				tfOkpo.setEnabled(true);
-				tfAdress.setEnabled(true);
-				tfUID.setEnabled(true);
-				tfNumber.setEnabled(true);
-				tfJurAdress.setEnabled(false);
-				tfDirFIO.setEnabled(false);
-				tfDirUID.setEnabled(false);
-				tfDirNumber.setEnabled(false);
-				tfSum.setEnabled(false);
+				FizAct();
 			}
 
 		});
@@ -150,17 +198,7 @@ public class AddEditForm extends JDialog
 		rbtnJur.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0)
 			{
-				okButton.setVisible(true);
-				tfRegDate.setEnabled(true);
-				tfOkpo.setEnabled(true);
-				tfAdress.setEnabled(true);
-				tfUID.setEnabled(true);
-				tfNumber.setEnabled(true);
-				tfJurAdress.setEnabled(true);
-				tfDirFIO.setEnabled(true);
-				tfDirUID.setEnabled(true);
-				tfDirNumber.setEnabled(true);
-				tfSum.setEnabled(true);
+				JurAct();
 			}
 		});
 
@@ -179,7 +217,7 @@ public class AddEditForm extends JDialog
 			@Override
 			public void focusLost(FocusEvent arg0)
 			{
-				
+
 			}
 		});
 		tfRegDate.addInputMethodListener(new InputMethodListener() {
@@ -310,43 +348,68 @@ public class AddEditForm extends JDialog
 						{
 							try
 							{
-								Date d = TextParser.parseDate(tfRegDate.getText(),"Дата регистрации");
-								Integer okpo = TextParser.parseInteger(tfOkpo.getText(), "ОКПО");
-								Integer UID = TextParser.parseInteger(tfUID.getText(), "ИНН");
-								Integer number = TextParser.parseInteger(tfNumber.getText(), "Номер");
-								Integer dirUID = TextParser.parseInteger(tfDirUID.getText(), "ИНН Директора");
-								Integer dirNumber = TextParser.parseInteger(tfDirNumber.getText(), "Телефон Директора");
-								Integer sum = TextParser.parseInteger(tfSum.getText(), "Сумма капитала");
-								
-								ClientModel cm = new ClientModel();
+								Date d = TextParser.parseDate(
+										tfRegDate.getText(), "Дата регистрации");
+								Integer okpo = TextParser.parseInteger(
+										tfOkpo.getText(), "ОКПО");
+								Integer UID = TextParser.parseInteger(
+										tfUID.getText(), "ИНН");
+								Integer number = TextParser.parseInteger(
+										tfNumber.getText(), "Номер");
+								Integer dirUID = null;
+								Integer dirNumber = null;
+								Integer sum = null;
+								if (rbtnJur.isSelected())
+								{
+									dirUID = TextParser.parseInteger(
+											tfDirUID.getText(), "ИНН Директора");
+									dirNumber = TextParser.parseInteger(
+											tfDirNumber.getText(),
+											"Телефон Директора");
+									sum = TextParser.parseInteger(
+											tfSum.getText(), "Сумма капитала");
+								}
+
+								ClientModel cm = null;
+								if (client != null) cm = client;
+								else cm = new ClientModel();
+								cm.setFIO(tfFIO.getText().toString());
 								cm.setRegistrationDate(d);
 								cm.setRevisionNum(okpo);
 								cm.setAdress(tfAdress.getText().toString());
 								cm.setUID(UID);
 								cm.setPhoneNumber(number);
-								cm.setDirectorAdress(tfJurAdress.getText().toString());
-								cm.setDirectorFIO(tfDirFIO.getText().toString());
-								cm.setDirectorUID(dirUID);
-								cm.setDirectorNumber(dirNumber);
-								cm.setCapitalSum(sum);
+								cm.setDirectorAdress(tfJurAdress.getText()
+										.toString());
+								if (rbtnJur.isSelected())
+								{
+									cm.setDirectorFIO(tfDirFIO.getText()
+											.toString());
+									cm.setDirectorUID(dirUID);
+									cm.setDirectorNumber(dirNumber);
+									cm.setCapitalSum(sum);
+								}
 								cm.save();
 							}
 							catch (Exception e)
 							{
-								JOptionPane.showMessageDialog(null, e.getMessage());
+								e.printStackTrace();
 							}
-							
+
 						}
 						else
 						{
-							JOptionPane.showMessageDialog(null, "Не все поля заполнены.");
+							JOptionPane.showMessageDialog(null,
+									"Не все поля заполнены.");
 						}
+						dialog.setVisible(false);
 					}
+					
 				});
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				okButton.setVisible(false);
-				getRootPane().setDefaultButton(okButton);
+				getRootPane().setDefaultButton(okButton);				
 			}
 			{
 				cancelButton = new JButton(
