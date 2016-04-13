@@ -7,9 +7,9 @@ import javax.swing.table.DefaultTableModel;
 
 public class ReportModel {
 	
-	private int id;
+	private Integer id;
 	
-	public int getID()
+	public Integer getID()
 	{
 		return this.id;
 	}
@@ -151,7 +151,7 @@ public class ReportModel {
 		{
 			if (this.id != 0)
 			{
-				int rs = connector.executeUpdate("UPDATE reports "
+				Integer rs = connector.executeUpdate("UPDATE reports "
 						+ "SET OperationDate=" + this.operationDate + " AND Kod='" + this.kod
 						+ "' AND Overpayment=" + this.overpayment
 						+ " AND Paid="+this.paid + " AND Returned=" + this.returned
@@ -160,7 +160,7 @@ public class ReportModel {
 			}
 			else
 			{
-				int rs = connector.executeUpdate("INSERT INTO reports(OperationDate,Kod,Overpayment,Paid,Returned,Sum)"
+				Integer rs = connector.executeUpdate("INSERT INTO reports(OperationDate,Kod,Overpayment,Paid,Returned,Sum)"
 						+" VALUES (" + this.operationDate + ",'" + this.kod + "',"+this.overpayment
 						+","+this.paid+","+this.returned+","+this.sum+")");
 			}
@@ -196,17 +196,26 @@ public class ReportModel {
 
 	    // names of columns
 	    Vector<String> columnNames = new Vector<String>();
-	    int columnCount = metaData.getColumnCount();
-	    for (int column = 1; column <= columnCount; column++) {
+	    Integer columnCount = metaData.getColumnCount();
+	    for (Integer column = 1; column <= columnCount; column++) {
 	        columnNames.add(metaData.getColumnName(column));
 	    }
 	    //columns.add(columnNames);
-
+	    Vector<Object> vo = new Vector<Object>();
+	    //for (int i=0; i<columnNames.size(); i++) vo.add(columnNames.get(i));
+	    vo.add("ID");
+	    vo.add("Дата операции");
+	    vo.add("Код");
+	    vo.add("Сумма");
+	    vo.add("Оплачено");
+	    vo.add("Возвращено");
+	    vo.add("Переплата");
 	    // data of the table
 	    Vector<Vector<Object>> data = new Vector<Vector<Object>>();
+	    data.add(vo);
 	    while (rs.next()) {
 	        Vector<Object> vector = new Vector<Object>();
-	        for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
+	        for (Integer columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
 	            vector.add(rs.getObject(columnIndex));
 	        }
 	        data.add(vector);
