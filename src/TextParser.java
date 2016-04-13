@@ -14,7 +14,7 @@ public class TextParser
 			int day = Integer.parseInt(vals[0]);
 			int month = Integer.parseInt(vals[1]);
 			int year = Integer.parseInt(vals[2]);
-			date = new Date(new GregorianCalendar(year,month,day).getTimeInMillis());
+			date = new Date(new GregorianCalendar(year,month-1,day).getTimeInMillis());
 		}
 		else throw new Exception("Неверный формат даты. Поле: "+field);
 		return date;

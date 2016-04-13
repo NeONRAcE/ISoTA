@@ -5,21 +5,21 @@ import java.util.List;
 public class ClientModel
 {
 
-	private int id;
+	private Integer id;
 
-	public int getID()
+	public Integer getID()
 	{
 		return this.id;
 	}
 
-	private int revisionNum; // OKPO
+	private Integer revisionNum; // OKPO
 
-	public int getRevisionNum()
+	public Integer getRevisionNum()
 	{
 		return this.revisionNum;
 	}
 
-	public void setRevisionNum(int newRevisionNum)
+	public void setRevisionNum(Integer newRevisionNum)
 	{
 		this.revisionNum = newRevisionNum;
 	}
@@ -60,26 +60,26 @@ public class ClientModel
 		this.FIO = newFIO;
 	}
 
-	private int UID;
+	private Integer UID;
 
-	public int getUID()
+	public Integer getUID()
 	{
 		return this.UID;
 	}
 
-	public void setUID(int newUID)
+	public void setUID(Integer newUID)
 	{
 		this.UID = newUID;
 	}
 
-	private int phoneNumber;
+	private Integer phoneNumber;
 
-	public int getPhoneNumber()
+	public Integer getPhoneNumber()
 	{
 		return this.phoneNumber;
 	}
 
-	public void setPhoneNumber(int newPhoneNumber)
+	public void setPhoneNumber(Integer newPhoneNumber)
 	{
 		this.phoneNumber = newPhoneNumber;
 	}
@@ -98,14 +98,14 @@ public class ClientModel
 		this.directorFIO = newDirectorFIO;
 	}
 
-	private int directorUID;
+	private Integer directorUID;
 
-	public int getDirectorUID()
+	public Integer getDirectorUID()
 	{
 		return this.directorUID;
 	}
 
-	public void setDirectorUID(int newDirectorUID)
+	public void setDirectorUID(Integer newDirectorUID)
 	{
 		this.directorUID = newDirectorUID;
 	}
@@ -122,27 +122,27 @@ public class ClientModel
 		this.directorAdress = newDirectorAdress;
 	}
 	
-	private int directorNumber;
+	private Integer directorNumber;
 	
-	public int getDirectorNumber()
+	public Integer getDirectorNumber()
 	{
 		return this.directorNumber;
 	}
 	
-	public void setDirectorNumber(int newDirectorNumber)
+	public void setDirectorNumber(Integer newDirectorNumber)
 	{
 		this.directorNumber = newDirectorNumber;
 	}
 	
 	
-	private int capitalSum;
+	private Integer capitalSum;
 
-	public int getCapitalSum()
+	public Integer getCapitalSum()
 	{
 		return this.capitalSum;
 	}
 
-	public void setCapitalSum(int newCapitalSum)
+	public void setCapitalSum(Integer newCapitalSum)
 	{
 		this.capitalSum = newCapitalSum;
 	}
@@ -199,11 +199,11 @@ public class ClientModel
 		MySQLConnector connector = new MySQLConnector();
 		if (connector.SQLConnect())
 		{
-			if (this.id != 0)
+			if (this.id != null)
 			{
-				int rs = connector.executeUpdate("UPDATE clients "
-						+"SET RevisionNum=" + this.revisionNum + " AND RegistrationDate=" + this.registrationDate
-						+" AND Adress='" + this.adress
+				Integer rs = connector.executeUpdate("UPDATE clients "
+						+"SET RevisionNum=" + this.revisionNum + " AND RegistrationDate='" + this.registrationDate
+						+"' AND Adress='" + this.adress
 						+"' AND FIO='"+this.FIO+"' AND UID="+this.UID
 						+" AND PhoneNumber="+this.phoneNumber
 						+" AND DirectorFIO='"+this.directorFIO+"' AND DirectorUID="+this.directorUID
@@ -213,8 +213,8 @@ public class ClientModel
 			}
 			else
 			{
-				int rs = connector.executeUpdate("INSERT INTO clients(RevisionNum,RegistrationDate,Adress,FIO,UID,PhoneNumber,DirectorFIO,DirectorUID,DirectorAdress,DirectorNumber,CapitalSum)"
-						+" VALUES (" + this.revisionNum + "," + this.registrationDate + ",'"+this.adress
+				Integer rs = connector.executeUpdate("INSERT INTO clients(RevisionNum,RegistrationDate,Adress,FIO,UID,PhoneNumber,DirectorFIO,DirectorUID,DirectorAdress,DirectorNumber,CapitalSum)"
+						+" VALUES (" + this.revisionNum + ",'" + this.registrationDate + "','"+this.adress
 						+"','"+this.FIO+"',"+this.UID+","+this.phoneNumber+",'"+this.directorFIO+"',"+this.directorUID
 						+",'"+this.directorAdress+"',"+this.directorNumber+","+this.capitalSum+")");
 			}
