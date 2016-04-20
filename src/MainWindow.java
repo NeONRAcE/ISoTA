@@ -41,6 +41,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableModel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
@@ -67,6 +68,8 @@ public class MainWindow
 		}
 	}
 
+	
+	private Integer searchPos = 0;
 	private JFrame frame;
 	private MainWindow MainWin;
 	private JPanel panelReports;
@@ -93,6 +96,7 @@ public class MainWindow
 	private JMenuItem clientsSearch;
 	private JPanel panel_1;
 	private JMenu menu;
+	private JTextField tfSearch;
 
 	/** Launch the application. */
 	public static void main(String[] args)
@@ -267,6 +271,16 @@ public class MainWindow
 		tableReports.setRowSelectionAllowed(false);
 		tableReports.setBounds(52, 51, 571, 237);
 		panelReports.add(tableReports);
+
+		tfSearch = new JTextField();
+		tfSearch.setBounds(52, 299, 86, 20);
+		panelReports.add(tfSearch);
+		tfSearch.setColumns(10);
+
+		JButton btnSearch = new JButton("Search");
+		btnSearch.addActionListener(new BtnSearchActionListener());
+		btnSearch.setBounds(148, 299, 89, 23);
+		panelReports.add(btnSearch);
 
 		panelClients = new JPanel();
 		panelClients.setBounds(0, 0, 680, 366);
@@ -519,4 +533,37 @@ public class MainWindow
 		}
 	}
 
+	private class BtnSearchActionListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent arg0)
+		{
+			searchPos = reportLiveSearch(tableReports.getSelectedRow()*tableReports.getColumnCount()+tableReports.getSelectedColumn(), tfSearch.getText());
+			//tableReports.changeSelection(rowIndex, columnIndex, toggle, extend);
+		}
+	}
+	
+	private Integer reportLiveSearch(Integer p, String s)
+	{
+		TableModel dtm = tableReports.getModel();
+		int curpos = 0;
+		for (int i=1; i<dtm.getRowCount(); i++)
+		{
+			for (int j=0; j<dtm.getColumnCount(); j++)
+			{
+				curpos = i*dtm.getColumnCount()+j;
+				if (p<curpos)
+				{
+					Object o = dtm.getValueAt(i, j);
+					String so = o.toString();
+					if (so.contains(s))
+					{
+						tableReports.setCellSelectionEnabled(true);
+						tableReports.changeSelection(i, j, false, false);
+						return curpos;
+					}
+				}
+			}
+		}
+		return p;
+	}
 }
