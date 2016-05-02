@@ -7,11 +7,16 @@ import javax.swing.table.DefaultTableModel;
 
 public class ReportModel {
 	
-	private Integer id;
+	private Long id;
 	
-	public Integer getID()
+	public Long getID()
 	{
 		return this.id;
+	}
+	
+	public void setID(Long newID)
+	{
+		this.id = newID;
 	}
 		
 	private Date operationDate;
@@ -38,9 +43,9 @@ public class ReportModel {
 		this.kod = newKod;
 	}
 	
-	private float sum;
+	private Float sum;
 	
-	public float getSum()
+	public Float getSum()
 	{
 		return this.sum;
 	}
@@ -50,9 +55,9 @@ public class ReportModel {
 		this.sum = newSum;
 	}
 	
-	private float paid;
+	private Float paid;
 	
-	public float getPaid()
+	public Float getPaid()
 	{
 		return this.paid;
 	}
@@ -62,9 +67,9 @@ public class ReportModel {
 		this.paid = newPaid;
 	}
 	
-	private float returned;
+	private Float returned;
 	
-	public float getReturned()
+	public Float getReturned()
 	{
 		return this.returned;
 	}
@@ -74,9 +79,9 @@ public class ReportModel {
 		this.returned = newReturned;
 	}
 	
-	private float overpayment;
+	private Float overpayment;
 	
-	public float getOverpayment()
+	public Float getOverpayment()
 	{
 		return this.overpayment;
 	}
@@ -103,7 +108,7 @@ public class ReportModel {
 					while (rs.next())
 					{
 						ReportModel r = new ReportModel();
-						r.id = rs.getInt("ID");
+						r.id = rs.getLong("ID");
 						r.operationDate = rs.getDate("Operation Date");
 						r.kod = rs.getString("Kod");
 						r.overpayment = rs.getFloat("Overpayment");
@@ -149,19 +154,19 @@ public class ReportModel {
 		MySQLConnector connector = new MySQLConnector();
 		if (connector.SQLConnect())
 		{
-			if (this.id != 0)
+			if (this.id != null)
 			{
 				Integer rs = connector.executeUpdate("UPDATE reports "
-						+ "SET OperationDate=" + this.operationDate + " AND Kod='" + this.kod
-						+ "' AND Overpayment=" + this.overpayment
-						+ " AND Paid="+this.paid + " AND Returned=" + this.returned
-						+ " AND Sum=" + this.sum + " WHERE ID=" + this.id);
+						+ "SET OperationDate='" + this.operationDate + "',Kod='" + this.kod
+						+ "',Overpayment=" + this.overpayment
+						+ ",Paid="+this.paid + ",Returned=" + this.returned
+						+ ",Sum=" + this.sum + " WHERE ID=" + this.id);
 						
 			}
 			else
 			{
 				Integer rs = connector.executeUpdate("INSERT INTO reports(OperationDate,Kod,Overpayment,Paid,Returned,Sum)"
-						+" VALUES (" + this.operationDate + ",'" + this.kod + "',"+this.overpayment
+						+" VALUES ('" + this.operationDate + "','" + this.kod + "',"+this.overpayment
 						+","+this.paid+","+this.returned+","+this.sum+")");
 			}
 
@@ -175,18 +180,28 @@ public class ReportModel {
 		MySQLConnector connector = new MySQLConnector();
 		if (connector.SQLConnect())
 		{
-			if (this.getID() == 0)
+			if (this.getID() == null)
 			{
 				res = false;
 			}
 			else
 			{
-				ResultSet rs = connector.executeSQL("DELETE FROM clients WHERE ID="+this.id);
+				Integer rs = connector.executeUpdate("DELETE FROM reports WHERE ID="+this.id);
 				res = true;
 			}
 		}
 		connector.SQLDisconnect();
 		return res;
+	}
+	
+	public static void deleteAll()
+	{
+		MySQLConnector connector = new MySQLConnector();
+		if (connector.SQLConnect())
+		{
+		Integer rs = connector.executeUpdate("DELETE FROM reports;");
+		}
+		connector.SQLDisconnect();
 	}
 	
 	private static DefaultTableModel buildTableModel(ResultSet rs)
