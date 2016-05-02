@@ -6,7 +6,7 @@ public class MySQLConnector
 {
 	
 	private static String username = "root";
-	private static String password = "13031994";
+	private static String password = "";//cop
 	
 	private Connection con = null;
 	
@@ -14,10 +14,7 @@ public class MySQLConnector
 	{
 		try 
 			{
-			this.con = DriverManager.getConnection("jdbc:mysql://localhost/isota", username, password);
-			//DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-			//Statement state = con.createStatement();
-			//ResultSet rslt = null;	
+			this.con = DriverManager.getConnection("jdbc:mysql://localhost/isota", username, password);	
 			return true;
 			} 
 		catch(SQLException ex)

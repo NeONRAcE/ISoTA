@@ -17,7 +17,13 @@ import java.awt.FlowLayout;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
+import java.sql.Date;
+import java.util.GregorianCalendar;
 import java.util.Vector;
 
 import javax.swing.DefaultListModel;
@@ -68,9 +74,8 @@ public class MainWindow
 		}
 	}
 
-	
 	private Integer searchPos = 0;
-	private JFrame frame;
+	private JFrame frmIsota;
 	private MainWindow MainWin;
 	private JPanel panelReports;
 	private JTable tableReports;
@@ -107,7 +112,7 @@ public class MainWindow
 				try
 				{
 					MainWindow window = new MainWindow();
-					window.frame.setVisible(true);
+					window.frmIsota.setVisible(true);
 				}
 				catch (Exception e)
 				{
@@ -127,16 +132,17 @@ public class MainWindow
 	private void initialize()
 	{
 		MainWin = this;
-		frame = new JFrame();
-		frame.addFocusListener(new FrameFocusListener());
-		frame.setResizable(false);
-		frame.addWindowListener(new FrameWindowListener());
-		frame.setBounds(100, 100, 686, 437);
-		frame.setLocationRelativeTo(null);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+		frmIsota = new JFrame();
+		frmIsota.setTitle("ISoTA");
+		frmIsota.addFocusListener(new FrameFocusListener());
+		frmIsota.setResizable(false);
+		frmIsota.addWindowListener(new FrameWindowListener());
+		frmIsota.setBounds(100, 100, 686, 437);
+		frmIsota.setLocationRelativeTo(null);
+		frmIsota.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		JMenuBar menuBar = new JMenuBar();
-		frame.setJMenuBar(menuBar);
+		frmIsota.setJMenuBar(menuBar);
 
 		JMenu menuReports = new JMenu("\u041E\u0442\u0447\u0435\u0442\u044B");
 		menuBar.add(menuReports);
@@ -155,6 +161,8 @@ public class MainWindow
 							.fireTableDataChanged();
 					JTableHeader th = tableReports.getTableHeader();
 					th.setEnabled(true);
+					tableReports.getColumnModel().getColumn(0).setMinWidth(0);
+					tableReports.getColumnModel().getColumn(0).setMaxWidth(0);
 				}
 				catch (SQLException e)
 				{
@@ -168,10 +176,12 @@ public class MainWindow
 
 		reportsCreate = new JMenuItem(
 				"\u0421\u043E\u0437\u0434\u0430\u0442\u044C");
+		reportsCreate.addActionListener(new ReportsCreateActionListener());
 		menuReports.add(reportsCreate);
 
 		reportsEdit = new JMenuItem(
 				"\u0420\u0435\u0434\u0430\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u0442\u044C");
+		reportsEdit.addActionListener(new ReportsEditActionListener());
 		menuReports.add(reportsEdit);
 
 		reportsSave = new JMenuItem(
@@ -180,10 +190,13 @@ public class MainWindow
 
 		reportsDelete = new JMenuItem(
 				"\u0423\u0434\u0430\u043B\u0438\u0442\u044C (\u0432\u044B\u0431\u0440.)");
+		reportsDelete.addActionListener(new ReportsDeleteActionListener());
 		menuReports.add(reportsDelete);
 
 		reportsDeleteAll = new JMenuItem(
 				"\u0423\u0434\u0430\u043B\u0438\u0442\u044C (\u0432\u0441\u0435)");
+		reportsDeleteAll
+				.addActionListener(new ReportsDeleteAllActionListener());
 		menuReports.add(reportsDeleteAll);
 
 		reportsSearch = new JMenuItem("\u041F\u043E\u0438\u0441\u043A");
@@ -220,10 +233,13 @@ public class MainWindow
 
 		clientsDelete = new JMenuItem(
 				"\u0423\u0434\u0430\u043B\u0438\u0442\u044C (\u0432\u044B\u0431\u0440.)");
+		clientsDelete.addActionListener(new ClientsDeleteActionListener());
 		menuClients.add(clientsDelete);
 
 		clientsDeleteAll = new JMenuItem(
 				"\u0423\u0434\u0430\u043B\u0438\u0442\u044C(\u0432\u0441\u0435)");
+		clientsDeleteAll
+				.addActionListener(new ClientsDeleteAllActionListener());
 		menuClients.add(clientsDeleteAll);
 
 		clientsSearch = new JMenuItem("\u041F\u043E\u0438\u0441\u043A");
@@ -249,42 +265,44 @@ public class MainWindow
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0)
 			{
-
+				RegForm rf = new RegForm();
+				rf.setModal(true);
+				rf.setVisible(true);
 			}
 		});
 		menu.add(menuItem);
-		frame.getContentPane().setLayout(null);
-
-		panelReports = new JPanel();
-		panelReports.setBounds(0, 0, 680, 366);
-		frame.getContentPane().add(panelReports);
-		panelReports.setLayout(null);
-
-		JLabel labelReports = new JLabel(
-				"\u0421\u043F\u0438\u0441\u043E\u043A \u043E\u0442\u0447\u0435\u0442\u043E\u0432");
-		labelReports.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		labelReports.setBounds(278, 26, 110, 14);
-		panelReports.add(labelReports);
-
-		tableReports = new JTable();
-		tableReports.setBorder(new LineBorder(new Color(0, 0, 0)));
-		tableReports.setRowSelectionAllowed(false);
-		tableReports.setBounds(52, 51, 571, 237);
-		panelReports.add(tableReports);
-
-		tfSearch = new JTextField();
-		tfSearch.setBounds(52, 299, 86, 20);
-		panelReports.add(tfSearch);
-		tfSearch.setColumns(10);
-
-		JButton btnSearch = new JButton("Search");
-		btnSearch.addActionListener(new BtnSearchActionListener());
-		btnSearch.setBounds(148, 299, 89, 23);
-		panelReports.add(btnSearch);
+		frmIsota.getContentPane().setLayout(null);
+		
+				panelReports = new JPanel();
+				panelReports.setBounds(0, 0, 680, 366);
+				frmIsota.getContentPane().add(panelReports);
+				panelReports.setLayout(null);
+				
+						JLabel labelReports = new JLabel(
+								"\u0421\u043F\u0438\u0441\u043E\u043A \u043E\u0442\u0447\u0435\u0442\u043E\u0432");
+						labelReports.setFont(new Font("Tahoma", Font.PLAIN, 14));
+						labelReports.setBounds(278, 26, 110, 14);
+						panelReports.add(labelReports);
+						
+								tableReports = new JTable();
+								tableReports.setBorder(new LineBorder(new Color(0, 0, 0)));
+								tableReports.setRowSelectionAllowed(false);
+								tableReports.setBounds(52, 51, 571, 237);
+								panelReports.add(tableReports);
+								
+										tfSearch = new JTextField();
+										tfSearch.setBounds(52, 299, 86, 20);
+										panelReports.add(tfSearch);
+										tfSearch.setColumns(10);
+										
+												JButton btnSearch = new JButton("Искать...");
+												btnSearch.addActionListener(new BtnSearchActionListener());
+												btnSearch.setBounds(148, 299, 89, 23);
+												panelReports.add(btnSearch);
 
 		panelClients = new JPanel();
 		panelClients.setBounds(0, 0, 680, 366);
-		frame.getContentPane().add(panelClients);
+		frmIsota.getContentPane().add(panelClients);
 
 		listFIO = new JList<fiolist>();
 		listFIO.setBounds(57, 68, 186, 256);
@@ -334,7 +352,7 @@ public class MainWindow
 
 		JPanel panel = new JPanel();
 		panel.setBounds(0, 368, 680, 20);
-		frame.getContentPane().add(panel);
+		frmIsota.getContentPane().add(panel);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 
 		statusText = new JLabel(
@@ -354,13 +372,13 @@ public class MainWindow
 
 	private void callLoginDialog()
 	{
-		MainWin.frame.setVisible(false);
+		MainWin.frmIsota.setVisible(false);
 		LoginDialog ld = new LoginDialog();
 		ld.setModalityType(Dialog.ModalityType.DOCUMENT_MODAL);
 		ld.setVisible(true);
 		if (!ld.getLoginResult()) System.exit(0);
 		ld.dispose();
-		MainWin.frame.setVisible(true);
+		MainWin.frmIsota.setVisible(true);
 	}
 
 	private void setSecurityRights()
@@ -537,21 +555,114 @@ public class MainWindow
 	{
 		public void actionPerformed(ActionEvent arg0)
 		{
-			searchPos = reportLiveSearch(tableReports.getSelectedRow()*tableReports.getColumnCount()+tableReports.getSelectedColumn(), tfSearch.getText());
-			//tableReports.changeSelection(rowIndex, columnIndex, toggle, extend);
+			searchPos = reportLiveSearch(
+					tableReports.getSelectedRow()
+							* tableReports.getColumnCount()
+							+ tableReports.getSelectedColumn(),
+					tfSearch.getText());
+			// tableReports.changeSelection(rowIndex, columnIndex, toggle,
+			// extend);
 		}
 	}
+
+	private class ReportsCreateActionListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent arg0)
+		{
+			AddEditFormReport aefr = new AddEditFormReport();
+			aefr.setModal(true);
+			aefr.setVisible(true);
+		}
+	}
+
+	private class ReportsEditActionListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent arg0)
+		{
+			AddEditFormReport aefr = new AddEditFormReport();
+			int line = tableReports.getSelectedRow();
+			if (line == -1)
+			{
+				JOptionPane.showMessageDialog(null, "Выберите строку.");
+				return;
+			}
+			ReportModel rm = new ReportModel();
+			rm.setID((Long) tableReports.getValueAt(line, 0));
+			// SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			rm.setOperationDate((Date) tableReports.getValueAt(line, 1));
+			rm.setKod((String) tableReports.getValueAt(line, 2));
+			rm.setSum((Float) tableReports.getValueAt(line, 3));
+			rm.setPaid((Float) tableReports.getValueAt(line, 4));
+			rm.setReturned((Float) tableReports.getValueAt(line, 5));
+			rm.setOverpayment((Float) tableReports.getValueAt(line, 6));
+			aefr.setModel(rm);
+			aefr.setModal(true);
+			aefr.setVisible(true);
+		}
+	}
+
+	private class ReportsDeleteActionListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent arg0)
+		{
+			int line = tableReports.getSelectedRow();
+			if (line == -1)
+			{
+				JOptionPane.showMessageDialog(null, "Выберите строку.");
+				return;
+			}
+			ReportModel rm = new ReportModel();
+			rm.setID((Long) tableReports.getValueAt(line, 0));
+			// SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			rm.setOperationDate((Date) tableReports.getValueAt(line, 1));
+			rm.setKod((String) tableReports.getValueAt(line, 2));
+			rm.setSum((Float) tableReports.getValueAt(line, 3));
+			rm.setPaid((Float) tableReports.getValueAt(line, 4));
+			rm.setReturned((Float) tableReports.getValueAt(line, 5));
+			rm.setOverpayment((Float) tableReports.getValueAt(line, 6));
+			rm.delete();
+		}
+	}
+
+	private class ReportsDeleteAllActionListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+			ReportModel.deleteAll();
+		}
+	}
+
+	private class ClientsDeleteActionListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+			fiolist index = listFIO.getSelectedValue();
+			if (index == null)
+				JOptionPane.showMessageDialog(null, "Выберите элемент");
+			ClientModel cm = index.client;
+			cm.delete();
+		}
+	}
+
+	private class ClientsDeleteAllActionListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+			ClientModel.deleteAll();
+		}
+	}
+
 	
 	private Integer reportLiveSearch(Integer p, String s)
 	{
 		TableModel dtm = tableReports.getModel();
 		int curpos = 0;
-		for (int i=1; i<dtm.getRowCount(); i++)
+		for (int i = 1; i < dtm.getRowCount(); i++)
 		{
-			for (int j=0; j<dtm.getColumnCount(); j++)
+			for (int j = 0; j < dtm.getColumnCount(); j++)
 			{
-				curpos = i*dtm.getColumnCount()+j;
-				if (p<curpos)
+				curpos = i * dtm.getColumnCount() + j;
+				if (p < curpos)
 				{
 					Object o = dtm.getValueAt(i, j);
 					String so = o.toString();
