@@ -88,14 +88,12 @@ public class MainWindow
 	private JMenuItem reportsOpen;
 	private JMenuItem reportsCreate;
 	private JMenuItem reportsEdit;
-	private JMenuItem reportsSave;
 	private JMenuItem reportsDelete;
 	private JMenuItem reportsDeleteAll;
 	private JMenuItem reportsSearch;
 	private JMenuItem clientsOpen;
 	private JMenuItem clientsAdd;
 	private JMenuItem clientsEdit;
-	private JMenuItem clientsSave;
 	private JMenuItem clientsDelete;
 	private JMenuItem clientsDeleteAll;
 	private JMenuItem clientsSearch;
@@ -184,10 +182,6 @@ public class MainWindow
 		reportsEdit.addActionListener(new ReportsEditActionListener());
 		menuReports.add(reportsEdit);
 
-		reportsSave = new JMenuItem(
-				"\u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C");
-		menuReports.add(reportsSave);
-
 		reportsDelete = new JMenuItem(
 				"\u0423\u0434\u0430\u043B\u0438\u0442\u044C (\u0432\u044B\u0431\u0440.)");
 		reportsDelete.addActionListener(new ReportsDeleteActionListener());
@@ -226,10 +220,6 @@ public class MainWindow
 				"\u0420\u0435\u0434\u0430\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u0442\u044C");
 		clientsEdit.addActionListener(new ClientsEditActionListener());
 		menuClients.add(clientsEdit);
-
-		clientsSave = new JMenuItem(
-				"\u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C");
-		menuClients.add(clientsSave);
 
 		clientsDelete = new JMenuItem(
 				"\u0423\u0434\u0430\u043B\u0438\u0442\u044C (\u0432\u044B\u0431\u0440.)");
@@ -272,6 +262,56 @@ public class MainWindow
 		});
 		menu.add(menuItem);
 		frmIsota.getContentPane().setLayout(null);
+				
+						panelClients = new JPanel();
+						panelClients.setBounds(0, 0, 680, 366);
+						frmIsota.getContentPane().add(panelClients);
+						
+								listFIO = new JList<fiolist>();
+								listFIO.setBounds(57, 68, 186, 256);
+								listFIO.addListSelectionListener(new ListFIOListSelectionListener());
+								panelClients.setLayout(null);
+								panelClients.add(listFIO);
+								
+										JLabel labelClients = new JLabel(
+												"\u0421\u043F\u0438\u0441\u043E\u043A \u043A\u043B\u0438\u0435\u043D\u0442\u043E\u0432");
+										labelClients.setBounds(273, 21, 123, 14);
+										labelClients.setFont(new Font("Tahoma", Font.PLAIN, 14));
+										panelClients.add(labelClients);
+										
+												JLabel labelFIO = new JLabel("\u0424\u0418\u041E");
+												labelFIO.setBounds(130, 51, 46, 14);
+												panelClients.add(labelFIO);
+												
+														JLabel label = new JLabel(
+																"\u0418\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u044F \u043E \u043A\u043B\u0438\u0435\u043D\u0442\u0435");
+														label.setBounds(378, 51, 123, 14);
+														panelClients.add(label);
+														
+																tableClientInfo = new JTable();
+																tableClientInfo.setBounds(253, 67, 369, 257);
+																panelClients.add(tableClientInfo);
+																
+																		panel_1 = new JPanel();
+																		panel_1.setBounds(0, 329, 680, 35);
+																		panelClients.add(panel_1);
+																		panel_1.setLayout(null);
+																		panel_1.setVisible(false);
+																		
+																				JLabel label_1 = new JLabel("\u041F\u043E\u0438\u0441\u043A:");
+																				label_1.setBounds(10, 11, 46, 14);
+																				panel_1.add(label_1);
+																				
+																						tfFIO = new JTextField();
+																						tfFIO.setBounds(57, 8, 186, 20);
+																						panel_1.add(tfFIO);
+																						tfFIO.setColumns(10);
+																						
+																								JButton button = new JButton(
+																										"\u0418\u0441\u043A\u0430\u0442\u044C \u0434\u0430\u043B\u0435\u0435...");
+																								button.addActionListener(new ButtonActionListener());
+																								button.setBounds(253, 7, 115, 23);
+																								panel_1.add(button);
 		
 				panelReports = new JPanel();
 				panelReports.setBounds(0, 0, 680, 366);
@@ -299,56 +339,6 @@ public class MainWindow
 												btnSearch.addActionListener(new BtnSearchActionListener());
 												btnSearch.setBounds(148, 299, 89, 23);
 												panelReports.add(btnSearch);
-
-		panelClients = new JPanel();
-		panelClients.setBounds(0, 0, 680, 366);
-		frmIsota.getContentPane().add(panelClients);
-
-		listFIO = new JList<fiolist>();
-		listFIO.setBounds(57, 68, 186, 256);
-		listFIO.addListSelectionListener(new ListFIOListSelectionListener());
-		panelClients.setLayout(null);
-		panelClients.add(listFIO);
-
-		JLabel labelClients = new JLabel(
-				"\u0421\u043F\u0438\u0441\u043E\u043A \u043A\u043B\u0438\u0435\u043D\u0442\u043E\u0432");
-		labelClients.setBounds(273, 21, 123, 14);
-		labelClients.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		panelClients.add(labelClients);
-
-		JLabel labelFIO = new JLabel("\u0424\u0418\u041E");
-		labelFIO.setBounds(130, 51, 46, 14);
-		panelClients.add(labelFIO);
-
-		JLabel label = new JLabel(
-				"\u0418\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u044F \u043E \u043A\u043B\u0438\u0435\u043D\u0442\u0435");
-		label.setBounds(378, 51, 123, 14);
-		panelClients.add(label);
-
-		tableClientInfo = new JTable();
-		tableClientInfo.setBounds(253, 67, 369, 257);
-		panelClients.add(tableClientInfo);
-
-		panel_1 = new JPanel();
-		panel_1.setBounds(0, 329, 680, 35);
-		panelClients.add(panel_1);
-		panel_1.setLayout(null);
-		panel_1.setVisible(false);
-
-		JLabel label_1 = new JLabel("\u041F\u043E\u0438\u0441\u043A:");
-		label_1.setBounds(10, 11, 46, 14);
-		panel_1.add(label_1);
-
-		tfFIO = new JTextField();
-		tfFIO.setBounds(57, 8, 186, 20);
-		panel_1.add(tfFIO);
-		tfFIO.setColumns(10);
-
-		JButton button = new JButton(
-				"\u0418\u0441\u043A\u0430\u0442\u044C \u0434\u0430\u043B\u0435\u0435...");
-		button.addActionListener(new ButtonActionListener());
-		button.setBounds(253, 7, 115, 23);
-		panel_1.add(button);
 
 		JPanel panel = new JPanel();
 		panel.setBounds(0, 368, 680, 20);

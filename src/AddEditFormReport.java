@@ -11,6 +11,7 @@ import java.sql.Date;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
 
 public class AddEditFormReport extends JDialog
 {
@@ -24,6 +25,7 @@ public class AddEditFormReport extends JDialog
 	private JTextField tfReturned;
 	private JTextField tfSum;
 	private ReportModel report;
+	private JTextField textField;
 
 	/** Launch the application. */
 	public static void main(String[] args)
@@ -51,7 +53,7 @@ public class AddEditFormReport extends JDialog
 	public AddEditFormReport()
 	{
 		setTitle("\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u043E\u0442\u0447\u0451\u0442");
-		setBounds(100, 100, 374, 316);
+		setBounds(100, 100, 358, 326);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -60,62 +62,90 @@ public class AddEditFormReport extends JDialog
 
 		JLabel label = new JLabel(
 				"\u0414\u0430\u0442\u0430 \u043E\u043F\u0435\u0440\u0430\u0446\u0438\u0438:");
-		label.setBounds(74, 41, 144, 14);
+		label.setHorizontalAlignment(SwingConstants.TRAILING);
+		label.setBounds(10, 29, 103, 14);
 		contentPanel.add(label);
 
 		tfOperDate = new JTextField();
-		tfOperDate.setBounds(192, 41, 86, 20);
+		tfOperDate.setBounds(123, 29, 107, 20);
 		contentPanel.add(tfOperDate);
 		tfOperDate.setColumns(10);
 
 		tfOperCode = new JTextField();
-		tfOperCode.setBounds(192, 72, 86, 20);
+		tfOperCode.setBounds(123, 60, 107, 20);
 		contentPanel.add(tfOperCode);
 		tfOperCode.setColumns(10);
 
 		tfOverpayment = new JTextField();
-		tfOverpayment.setBounds(192, 103, 86, 20);
+		tfOverpayment.setBounds(123, 91, 107, 20);
 		contentPanel.add(tfOverpayment);
 		tfOverpayment.setColumns(10);
 
 		tfPaid = new JTextField();
-		tfPaid.setBounds(192, 134, 86, 20);
+		tfPaid.setBounds(123, 122, 107, 20);
 		contentPanel.add(tfPaid);
 		tfPaid.setColumns(10);
 
 		tfReturned = new JTextField();
-		tfReturned.setBounds(192, 165, 86, 20);
+		tfReturned.setBounds(123, 153, 107, 20);
 		contentPanel.add(tfReturned);
 		tfReturned.setColumns(10);
 
 		tfSum = new JTextField();
-		tfSum.setBounds(192, 196, 86, 20);
+		tfSum.setBounds(123, 184, 107, 20);
 		contentPanel.add(tfSum);
 		tfSum.setColumns(10);
 
 		JLabel lblNewLabel = new JLabel(
 				"\u041A\u043E\u0434 \u043E\u043F\u0435\u0440\u0430\u0446\u0438\u0438:");
-		lblNewLabel.setBounds(74, 72, 144, 14);
+		lblNewLabel.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblNewLabel.setBounds(10, 60, 103, 14);
 		contentPanel.add(lblNewLabel);
 
 		JLabel label_1 = new JLabel(
 				"\u041F\u0435\u0440\u0435\u043F\u043B\u0430\u0442\u0430:");
-		label_1.setBounds(74, 103, 144, 14);
+		label_1.setHorizontalAlignment(SwingConstants.TRAILING);
+		label_1.setBounds(10, 91, 103, 14);
 		contentPanel.add(label_1);
 
 		JLabel label_2 = new JLabel(
 				"\u041E\u043F\u043B\u0430\u0447\u0435\u043D\u043E:");
-		label_2.setBounds(74, 134, 144, 14);
+		label_2.setHorizontalAlignment(SwingConstants.TRAILING);
+		label_2.setBounds(10, 122, 103, 14);
 		contentPanel.add(label_2);
 
 		JLabel label_3 = new JLabel(
 				"\u0412\u043E\u0437\u0432\u0440\u0430\u0449\u0435\u043D\u043E:");
-		label_3.setBounds(74, 165, 144, 14);
+		label_3.setHorizontalAlignment(SwingConstants.TRAILING);
+		label_3.setBounds(10, 153, 103, 14);
 		contentPanel.add(label_3);
 
 		JLabel label_4 = new JLabel("\u0421\u0443\u043C\u043C\u0430:");
-		label_4.setBounds(74, 196, 144, 14);
+		label_4.setHorizontalAlignment(SwingConstants.TRAILING);
+		label_4.setBounds(10, 184, 103, 14);
 		contentPanel.add(label_4);
+		
+		textField = new JTextField();
+		textField.setEditable(false);
+		textField.setBounds(123, 215, 107, 20);
+		contentPanel.add(textField);
+		textField.setColumns(10);
+		
+		JButton btnNewButton = new JButton("\u0412\u044B\u0431\u0440\u0430\u0442\u044C");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				SelectClientForm scf = new SelectClientForm();
+				scf.setModal(true);
+				scf.setVisible(true);
+			}
+		});
+		btnNewButton.setBounds(240, 215, 87, 21);
+		contentPanel.add(btnNewButton);
+		
+		JLabel label_5 = new JLabel("\u0424\u0418\u041E \u043A\u043B\u0438\u0435\u043D\u0442\u0430:");
+		label_5.setHorizontalAlignment(SwingConstants.TRAILING);
+		label_5.setBounds(10, 218, 103, 14);
+		contentPanel.add(label_5);
 		thisForm = this;
 		{
 			JPanel buttonPane = new JPanel();
