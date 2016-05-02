@@ -42,6 +42,7 @@ public class LoginDialog extends JDialog
 	/** Create the dialog. */
 	public LoginDialog()
 	{
+		setTitle("ISoTA: \u0410\u0432\u0442\u043E\u0440\u0438\u0437\u0430\u0446\u0438\u044F");
 		LogDiag = this;
 		loginresult = false;
 		
@@ -52,13 +53,14 @@ public class LoginDialog extends JDialog
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 
-		JLabel lblAuthorization = new JLabel("Authorization");
+		JLabel lblAuthorization = new JLabel("\u0410\u0432\u0442\u043E\u0440\u0438\u0437\u0430\u0446\u0438\u044F");
 		lblAuthorization.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAuthorization.setBounds(172, 38, 87, 14);
 		contentPanel.add(lblAuthorization);
 
-		JLabel lblLogin = new JLabel("Login");
-		lblLogin.setBounds(200, 83, 46, 14);
+		JLabel lblLogin = new JLabel("\u041B\u043E\u0433\u0438\u043D");
+		lblLogin.setHorizontalAlignment(SwingConstants.CENTER);
+		lblLogin.setBounds(172, 83, 87, 14);
 		contentPanel.add(lblLogin);
 
 		tfLogin = new JTextField();
@@ -66,8 +68,9 @@ public class LoginDialog extends JDialog
 		contentPanel.add(tfLogin);
 		tfLogin.setColumns(10);
 
-		JLabel lblPassword = new JLabel("Password");
-		lblPassword.setBounds(192, 139, 46, 14);
+		JLabel lblPassword = new JLabel("\u041F\u0430\u0440\u043E\u043B\u044C");
+		lblPassword.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPassword.setBounds(172, 139, 87, 14);
 		contentPanel.add(lblPassword);
 
 		pfPass = new JPasswordField();
@@ -78,7 +81,7 @@ public class LoginDialog extends JDialog
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton okButton = new JButton("OK");
+				JButton okButton = new JButton("\u0412\u043E\u0439\u0442\u0438");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 					}
@@ -89,7 +92,12 @@ public class LoginDialog extends JDialog
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
-				JButton cancelButton = new JButton("Cancel");
+				JButton cancelButton = new JButton("\u0412\u044B\u0445\u043E\u0434");
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						dispose();
+					}
+				});
 				cancelButton.addMouseListener(new CancelButtonMouseListener());
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);

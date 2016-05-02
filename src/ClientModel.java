@@ -202,13 +202,13 @@ public class ClientModel
 			if (this.id != null)
 			{
 				Integer rs = connector.executeUpdate("UPDATE clients "
-						+"SET RevisionNum=" + this.revisionNum + " AND RegistrationDate='" + this.registrationDate
-						+"' AND Adress='" + this.adress
-						+"' AND FIO='"+this.FIO+"' AND UID="+this.UID
-						+" AND PhoneNumber="+this.phoneNumber
-						+" AND DirectorFIO='"+this.directorFIO+"' AND DirectorUID="+this.directorUID
-						+" AND DirectorAdress='"+this.directorAdress+"' AND DirectorNumber="+this.directorNumber
-						+" AND CapitalSum="+this.capitalSum
+						+"SET RevisionNum=" + this.revisionNum + ",RegistrationDate='" + this.registrationDate
+						+"',Adress='" + this.adress
+						+"',FIO='"+this.FIO+"',UID="+this.UID
+						+",PhoneNumber="+this.phoneNumber
+						+",DirectorFIO='"+this.directorFIO+"',DirectorUID="+this.directorUID
+						+",DirectorAdress='"+this.directorAdress+"',DirectorNumber="+this.directorNumber
+						+",CapitalSum="+this.capitalSum
 						+" WHERE ID="+this.id);
 			}
 			else
@@ -229,18 +229,28 @@ public class ClientModel
 		MySQLConnector connector = new MySQLConnector();
 		if (connector.SQLConnect())
 		{
-			if (this.getID() == 0)
+			if (this.getID() == null)
 			{
 				res = false;
 			}
 			else
 			{
-				ResultSet rs = connector.executeSQL("DELETE FROM clients WHERE ID="+this.id);
+				Integer rs = connector.executeUpdate("DELETE FROM clients WHERE ID="+this.id);
 				res = true;
 			}
 		}
 		connector.SQLDisconnect();
 		return res;
+	}
+	
+	public static void deleteAll()
+	{
+		MySQLConnector connector = new MySQLConnector();
+		if (connector.SQLConnect())
+		{
+			Integer rs = connector.executeUpdate("DELETE FROM clients;");
+		}
+		connector.SQLDisconnect();
 	}
 	
 	public static ClientModel[] findClientsByName(String name)
