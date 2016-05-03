@@ -56,6 +56,7 @@ import java.awt.SystemColor;
 
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
+import javax.swing.JComboBox;
 
 public class MainWindow
 {
@@ -100,6 +101,7 @@ public class MainWindow
 	private JPanel panel_1;
 	private JMenu menu;
 	private JTextField tfSearch;
+	private JLabel label_2;
 
 	/** Launch the application. */
 	public static void main(String[] args)
@@ -262,6 +264,41 @@ public class MainWindow
 		});
 		menu.add(menuItem);
 		frmIsota.getContentPane().setLayout(null);
+						
+								panelReports = new JPanel();
+								panelReports.setBounds(0, 0, 680, 366);
+								frmIsota.getContentPane().add(panelReports);
+								panelReports.setLayout(null);
+								
+										JLabel labelReports = new JLabel(
+												"\u0421\u043F\u0438\u0441\u043E\u043A \u043E\u0442\u0447\u0435\u0442\u043E\u0432");
+										labelReports.setFont(new Font("Tahoma", Font.PLAIN, 14));
+										labelReports.setBounds(278, 26, 110, 14);
+										panelReports.add(labelReports);
+										
+												tableReports = new JTable();
+												tableReports.setBorder(new LineBorder(new Color(0, 0, 0)));
+												tableReports.setRowSelectionAllowed(false);
+												tableReports.setBounds(52, 51, 571, 237);
+												panelReports.add(tableReports);
+												
+														tfSearch = new JTextField();
+														tfSearch.setBounds(52, 299, 86, 20);
+														panelReports.add(tfSearch);
+														tfSearch.setColumns(10);
+														
+																JButton btnSearch = new JButton("Искать...");
+																btnSearch.addActionListener(new BtnSearchActionListener());
+																btnSearch.setBounds(320, 298, 89, 23);
+																panelReports.add(btnSearch);
+																
+																label_2 = new JLabel("\u0432 \u043F\u043E\u043B\u0435:");
+																label_2.setBounds(149, 302, 46, 14);
+																panelReports.add(label_2);
+																
+																JComboBox comboBox = new JComboBox();
+																comboBox.setBounds(200, 299, 110, 20);
+																panelReports.add(comboBox);
 				
 						panelClients = new JPanel();
 						panelClients.setBounds(0, 0, 680, 366);
@@ -312,33 +349,6 @@ public class MainWindow
 																								button.addActionListener(new ButtonActionListener());
 																								button.setBounds(253, 7, 115, 23);
 																								panel_1.add(button);
-		
-				panelReports = new JPanel();
-				panelReports.setBounds(0, 0, 680, 366);
-				frmIsota.getContentPane().add(panelReports);
-				panelReports.setLayout(null);
-				
-						JLabel labelReports = new JLabel(
-								"\u0421\u043F\u0438\u0441\u043E\u043A \u043E\u0442\u0447\u0435\u0442\u043E\u0432");
-						labelReports.setFont(new Font("Tahoma", Font.PLAIN, 14));
-						labelReports.setBounds(278, 26, 110, 14);
-						panelReports.add(labelReports);
-						
-								tableReports = new JTable();
-								tableReports.setBorder(new LineBorder(new Color(0, 0, 0)));
-								tableReports.setRowSelectionAllowed(false);
-								tableReports.setBounds(52, 51, 571, 237);
-								panelReports.add(tableReports);
-								
-										tfSearch = new JTextField();
-										tfSearch.setBounds(52, 299, 86, 20);
-										panelReports.add(tfSearch);
-										tfSearch.setColumns(10);
-										
-												JButton btnSearch = new JButton("Искать...");
-												btnSearch.addActionListener(new BtnSearchActionListener());
-												btnSearch.setBounds(148, 299, 89, 23);
-												panelReports.add(btnSearch);
 
 		JPanel panel = new JPanel();
 		panel.setBounds(0, 368, 680, 20);

@@ -10,6 +10,8 @@ import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JList;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 public class SelectClientForm extends JDialog {
 
@@ -31,6 +33,7 @@ public class SelectClientForm extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	private JList<fiolist> listFIO;
 	private ClientModel[] clients;
+	private JTextField textField;
 
 	/**
 	 * Launch the application.
@@ -60,7 +63,8 @@ public class SelectClientForm extends JDialog {
 	 * Create the dialog.
 	 */
 	public SelectClientForm() {
-		setBounds(100, 100, 450, 368);
+		setTitle("\u0412\u044B\u0431\u0440\u0430\u0442\u044C \u041A\u043B\u0438\u0435\u043D\u0442\u0430");
+		setBounds(100, 100, 421, 368);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -68,14 +72,23 @@ public class SelectClientForm extends JDialog {
 		contentPanel.setLayout(null);
 		
 		JList listFIO = new JList();
-		listFIO.setBounds(57, 68, 186, 256);
+		listFIO.setBounds(36, 11, 186, 274);
 		contentPanel.add(listFIO);
+		
+		textField = new JTextField();
+		textField.setBounds(232, 34, 86, 20);
+		contentPanel.add(textField);
+		textField.setColumns(10);
+		
+		JButton button = new JButton("\u041F\u043E\u0438\u0441\u043A");
+		button.setBounds(328, 33, 63, 23);
+		contentPanel.add(button);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton okButton = new JButton("OK");
+				JButton okButton = new JButton("\u0412\u044B\u0431\u0440\u0430\u0442\u044C");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						dispose();
@@ -86,7 +99,7 @@ public class SelectClientForm extends JDialog {
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
-				JButton cancelButton = new JButton("Cancel");
+				JButton cancelButton = new JButton("\u041E\u0442\u043C\u0435\u043D\u0430");
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						dispose();
