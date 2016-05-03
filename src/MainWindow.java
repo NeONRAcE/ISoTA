@@ -380,12 +380,10 @@ public class MainWindow
 			reportsDelete.setEnabled(false);
 			reportsDeleteAll.setEnabled(false);
 			reportsEdit.setEnabled(false);
-			reportsSave.setEnabled(false);
 			clientsAdd.setEnabled(false);
 			clientsDelete.setEnabled(false);
 			clientsDeleteAll.setEnabled(false);
 			clientsEdit.setEnabled(false);
-			clientsSave.setEnabled(false);
 			menu.setVisible(false);
 		}
 
@@ -395,7 +393,6 @@ public class MainWindow
 			reportsDelete.setEnabled(false);
 			reportsDeleteAll.setEnabled(false);
 			reportsEdit.setEnabled(false);
-			reportsSave.setEnabled(false);
 			menu.setVisible(false);
 		}
 
