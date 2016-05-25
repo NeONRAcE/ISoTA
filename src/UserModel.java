@@ -2,9 +2,9 @@ import java.sql.*;
 
 public class UserModel
 {
-	private int id;
+	private Integer id;
 
-	public int getID()
+	public Integer getID()
 	{
 		return this.id;
 	}
@@ -111,7 +111,7 @@ public class UserModel
 		MySQLConnector connector = new MySQLConnector();
 		if (connector.SQLConnect())
 		{
-			if (this.id != 0)
+			if (this.id != null)
 			{
 				int res = connector.executeUpdate("UPDATE users"
 						+" SET Login='" + this.login + "' AND Password='" + this.password + "' AND Name='"+this.name + "' AND LastName='"+this.lastName+"' AND SecurityClass="+this.securityClass
