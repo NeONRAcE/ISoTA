@@ -6,26 +6,34 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
+
 import java.awt.event.ActionListener;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
+
+import javax.swing.ComboBoxModel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
+import javax.swing.JComboBox;
+
+import com.sun.org.apache.bcel.internal.generic.LUSHR;
 
 public class AddEditFormReport extends JDialog
 {
 
 	private final JPanel contentPanel = new JPanel();
 	private JDialog thisForm;
-	private JTextField tfOperDate;
+	private JCustomTextField tfOperDate;
 	private JTextField tfOperCode;
 	private JTextField tfOverpayment;
 	private JTextField tfPaid;
 	private JTextField tfReturned;
 	private JTextField tfSum;
 	private ReportModel report;
-	private JTextField textField;
+	private JTextField tfClient;
+	private ClientModel curClient;
 
 	/** Launch the application. */
 	public static void main(String[] args)
@@ -66,7 +74,8 @@ public class AddEditFormReport extends JDialog
 		label.setBounds(10, 29, 103, 14);
 		contentPanel.add(label);
 
-		tfOperDate = new JTextField();
+		tfOperDate = new JCustomTextField();
+		tfOperDate.setPlaceholder("24/03/2014");
 		tfOperDate.setBounds(123, 29, 107, 20);
 		contentPanel.add(tfOperDate);
 		tfOperDate.setColumns(10);
@@ -125,27 +134,35 @@ public class AddEditFormReport extends JDialog
 		label_4.setBounds(10, 184, 103, 14);
 		contentPanel.add(label_4);
 		
-		textField = new JTextField();
-		textField.setEditable(false);
-		textField.setBounds(123, 215, 107, 20);
-		contentPanel.add(textField);
-		textField.setColumns(10);
-		
-		JButton btnNewButton = new JButton("\u0412\u044B\u0431\u0440\u0430\u0442\u044C");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				SelectClientForm scf = new SelectClientForm();
-				scf.setModal(true);
-				scf.setVisible(true);
-			}
-		});
-		btnNewButton.setBounds(240, 215, 87, 21);
-		contentPanel.add(btnNewButton);
-		
 		JLabel label_5 = new JLabel("\u0424\u0418\u041E \u043A\u043B\u0438\u0435\u043D\u0442\u0430:");
 		label_5.setHorizontalAlignment(SwingConstants.TRAILING);
 		label_5.setBounds(10, 218, 103, 14);
 		contentPanel.add(label_5);
+		
+		tfClient = new JTextField();
+		tfClient.setEditable(false);
+		tfClient.setBounds(123, 215, 70, 20);
+		contentPanel.add(tfClient);
+		tfClient.setColumns(10);
+		
+		JButton btnOpenClientDialog = new JButton("...");
+		btnOpenClientDialog.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				SelectClientForm scf = new SelectClientForm();
+				scf.setAlwaysOnTop(true);
+				scf.setModal(true);
+				scf.setVisible(true);
+				ClientModel cm = scf.getClientModel();
+				if (scf != null)
+				{
+					curClient = cm;
+					tfClient.setText(curClient.toString());
+				}
+			}
+		});
+		btnOpenClientDialog.setBounds(203, 214, 27, 23);
+		contentPanel.add(btnOpenClientDialog);
+		
 		thisForm = this;
 		{
 			JPanel buttonPane = new JPanel();
@@ -178,7 +195,9 @@ public class AddEditFormReport extends JDialog
 								report.setPaid(paid);
 								report.setReturned(returned);
 								report.setSum(sum);
+								report.setClientID(curClient.getID());
 								report.save();
+								thisForm.dispose();
 							}
 							catch (Exception e)
 							{
@@ -190,7 +209,7 @@ public class AddEditFormReport extends JDialog
 							JOptionPane.showMessageDialog(null,
 									"Не все поля заполнены.");
 						}
-						thisForm.setVisible(false);
+						//thisForm.setVisible(false);
 					}
 				});
 				okButton.setActionCommand("OK");
@@ -222,5 +241,7 @@ public class AddEditFormReport extends JDialog
 		tfPaid.setText(report.getPaid().toString());
 		tfReturned.setText(report.getReturned().toString());
 		tfSum.setText(report.getSum().toString());
+		curClient = ClientModel.findClient(report.getClientID());
+		tfClient.setText(curClient.toString());
 	}
 }

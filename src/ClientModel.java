@@ -5,9 +5,9 @@ import java.util.List;
 public class ClientModel
 {
 
-	private Integer id;
+	private Long id;
 
-	public Integer getID()
+	public Long getID()
 	{
 		return this.id;
 	}
@@ -164,7 +164,7 @@ public class ClientModel
 					while (rs.next())
 					{
 						ClientModel t = new ClientModel();
-						t.id = rs.getInt("ID");
+						t.id = rs.getLong("ID");
 						t.revisionNum = rs.getInt("RevisionNum");
 						t.registrationDate = rs.getDate("RegistrationDate");
 						t.adress = rs.getString("Adress");
@@ -253,6 +253,46 @@ public class ClientModel
 		connector.SQLDisconnect();
 	}
 	
+	public static ClientModel findClient(Long id)
+	{
+		ClientModel res = new ClientModel();
+		
+		MySQLConnector connector = new MySQLConnector();
+		if (connector.SQLConnect())
+		{
+			ResultSet rs = connector.executeSQL("SELECT * FROM clients WHERE ID="+id);
+			if (rs != null)
+			{
+				try
+				{
+					while (rs.next())
+					{
+						res.id = rs.getLong("ID");
+						res.revisionNum = rs.getInt("RevisionNum");
+						res.registrationDate = rs.getDate("RegistrationDate");
+						res.adress = rs.getString("Adress");
+						res.FIO = rs.getString("FIO");
+						res.UID = rs.getInt("UID");
+						res.phoneNumber = rs.getInt("PhoneNumber");
+						res.directorFIO = rs.getString("DirectorFIO");
+						res.directorUID = rs.getInt("DirectorUID");
+						res.directorAdress = rs.getString("DirectorAdress");
+						res.directorNumber = rs.getInt("DirectorNumber");
+						res.capitalSum = rs.getInt("CapitalSum");						
+					}
+				}
+				catch (SQLException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		connector.SQLDisconnect();
+		
+		return res;
+	}
+	
 	public static ClientModel[] findClientsByName(String name)
 	{
 		List<ClientModel> res = null;
@@ -270,7 +310,7 @@ public class ClientModel
 					while (rs.next())
 					{
 						ClientModel t = new ClientModel();
-						t.id = rs.getInt("ID");
+						t.id = rs.getLong("ID");
 						t.revisionNum = rs.getInt("RevisionNum");
 						t.registrationDate = rs.getDate("RegistrationDate");
 						t.adress = rs.getString("Adress");
@@ -298,5 +338,10 @@ public class ClientModel
 		result = res.toArray(result);
 		
 		return result;
+	}
+	
+	public String toString()
+	{
+		return this.getFIO();
 	}
 }
